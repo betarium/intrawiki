@@ -1,0 +1,3 @@
+# github language detection config
+*.ts linguist-language=TypeScript
+views/* linguist-vendored

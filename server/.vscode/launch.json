@@ -1,0 +1,26 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "command": "pnpm debug",
+            "name": "Debug server",
+            "request": "launch",
+            "type": "node-terminal"
+        },
+        {
+            "command": "pnpm start",
+            "name": "Start server",
+            "request": "launch",
+            "type": "node-terminal"
+        },
+        {
+            "command": "pnpm install",
+            "name": "Initialize",
+            "request": "launch",
+            "type": "node-terminal"
+        },
+    ]
+}
