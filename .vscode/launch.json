@@ -1,0 +1,30 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "command": "pnpm start",
+            "name": "Start Server",
+            "request": "launch",
+            "type": "node-terminal",
+            "cwd": "${workspaceFolder}/server",
+            "outFiles": ["${workspaceFolder}/build/**/*.js"]
+        },
+        {
+            "command": "pnpm typeorm:sync",
+            "name": "DB sync",
+            "request": "launch",
+            "type": "node-terminal",
+            "cwd": "${workspaceFolder}/server"
+        },
+        {
+            "command": "cd server && rmdir /s /q build && cd ../front && rmdir /s /q build",
+            "name": "Clean",
+            "request": "launch",
+            "type": "node-terminal",
+            "cwd": "${workspaceFolder}"
+        },
+    ]
+}

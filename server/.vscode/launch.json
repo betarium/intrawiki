@@ -17,7 +17,7 @@
             "type": "node-terminal"
         },
         {
-            "command": "pnpm install",
+            "command": "pnpm install --frozen-lockfile",
             "name": "Initialize",
             "request": "launch",
             "type": "node-terminal"

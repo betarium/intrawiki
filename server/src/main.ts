@@ -4,9 +4,14 @@
  * Module dependencies.
  */
 
+import DatabaseService from "./databases/DatabaseService";
+
 var app = require('./app');
 var debug = require('debug')('express-generator-to-typescript-sample:server');
 var http = require('http');
+
+const database = new DatabaseService()
+database.initialize()
 
 /**
  * Get port from environment and store in Express.
