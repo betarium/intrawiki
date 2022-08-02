@@ -1,4 +1,5 @@
 var createError = require('http-errors');
+import CommonConfig from 'common/CommonConfig';
 import express from 'express';
 var path = require('path');
 var cookieParser = require('cookie-parser');
@@ -11,17 +12,17 @@ var app = express();
 
 // view engine setup
 //app.set('views', path.join(__dirname, 'views'));
-app.use(express.static(path.join(__dirname, '../../public')));
-app.set('view engine', 'jade');
+// app.use(express.static(path.join(__dirname, CommonConfig.PUBLIC_DIR)));
+// app.set('view engine', 'jade');
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(CommonConfig.PUBLIC_DIR));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/api/users', usersRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req: express.Request, res: express.Response, next: express.NextFunction) {

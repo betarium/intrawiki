@@ -5,6 +5,14 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "command": "pnpm debug",
+            "name": "Debug Server",
+            "request": "launch",
+            "type": "node-terminal",
+            "cwd": "${workspaceFolder}/server",
+            "outFiles": ["${workspaceFolder}/build/**/*.js"]
+        },
+        {
             "command": "pnpm start",
             "name": "Start Server",
             "request": "launch",

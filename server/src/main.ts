@@ -8,7 +8,7 @@ import DatabaseService from "./databases/DatabaseService";
 
 var app = require('./app');
 var debug = require('debug')('express-generator-to-typescript-sample:server');
-var http = require('http');
+import http from 'http'
 
 const database = new DatabaseService()
 database.initialize()
@@ -90,6 +90,6 @@ function onListening() {
   var addr = server.address();
   var bind = typeof addr === 'string'
     ? 'pipe ' + addr
-    : 'port ' + addr.port;
+    : 'port ' + addr?.port;
   debug('Listening on ' + bind);
 }

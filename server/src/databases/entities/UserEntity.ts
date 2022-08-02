@@ -30,7 +30,7 @@ export class UserEntity {
 	updateTimestamp: Date;
 
 	constructor() {
-		this.id = 0;
+		this.id = -1;
 		this.account = "";
 		this.userName = "";
 		this.email = "";
