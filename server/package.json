@@ -1,19 +1,22 @@
 {
-  "name": "express-generator-to-typescript-sample",
+  "name": "intrawiki",
   "version": "0.0.0",
   "private": true,
   "scripts": {
     "start": "cross-env NODE_PATH=./build node ./build/main.js",
-    "debug": "ts-node-dev -r tsconfig-paths/register ./src/main.ts",
+    "debug": "cross-env DEBUG=intrawiki:* ts-node-dev -r tsconfig-paths/register ./src/main.ts",
     "build": "tsc",
     "typeorm:sync": "typeorm-ts-node-commonjs schema:sync -d src/databases/DefaultDataSource.ts"
   },
   "dependencies": {
+    "@types/debug": "^4.1.7",
+    "@types/express-session": "^1.17.5",
     "cookie-parser": "~1.4.4",
     "cross-env": "^7.0.3",
     "debug": "~2.6.9",
     "dotenv": "^16.0.1",
     "express": "~4.16.1",
+    "express-session": "^1.17.3",
     "http-errors": "~1.6.3",
     "jade": "~1.11.0",
     "morgan": "~1.9.1",

@@ -7,7 +7,10 @@
 import DatabaseService from "./databases/DatabaseService";
 
 var app = require('./app');
-var debug = require('debug')('express-generator-to-typescript-sample:server');
+import { debug } from 'debug'
+
+const debugLog = debug('intrawiki:server');
+
 import http from 'http'
 
 const database = new DatabaseService()
@@ -17,7 +20,7 @@ database.initialize()
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '3000');
+var port = normalizePort(process.env.PORT || '4000');
 app.set('port', port);
 
 /**
@@ -91,5 +94,5 @@ function onListening() {
   var bind = typeof addr === 'string'
     ? 'pipe ' + addr
     : 'port ' + addr?.port;
-  debug('Listening on ' + bind);
+  debugLog('Listening on ' + bind);
 }

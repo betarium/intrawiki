@@ -1,28 +1,38 @@
 var createError = require('http-errors');
 import CommonConfig from 'common/CommonConfig';
 import express from 'express';
-var path = require('path');
+import session from 'express-session'
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
+const authRouter = require('./routes/auth');
+const pageRouter = require('./routes/page');
 
-var app = express();
-
-// view engine setup
-//app.set('views', path.join(__dirname, 'views'));
-// app.use(express.static(path.join(__dirname, CommonConfig.PUBLIC_DIR)));
-// app.set('view engine', 'jade');
+const app = express();
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(CommonConfig.PUBLIC_DIR));
+app.use(session({
+  secret: process.env.SESSION_SECRET ?? 'secret',
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    httpOnly: true,
+    secure: (CommonConfig.NODE_ENV === 'production'),
+    maxAge: 1000 * 60 * 60 * 24,
+    path: "/"
+  },
+}));
 
 app.use('/', indexRouter);
 app.use('/api/users', usersRouter);
+app.use('/api/auth', authRouter);
+app.use('/api/pages', pageRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req: express.Request, res: express.Response, next: express.NextFunction) {

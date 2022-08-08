@@ -5,12 +5,24 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "command": "pnpm start",
+            "name": "Debug Front",
+            "request": "launch",
+            "type": "node-terminal",
+            "cwd": "${workspaceFolder}/front",
+            "outFiles": [
+                "${workspaceFolder}/build/**/*.js"
+            ]
+        },
+        {
             "command": "pnpm debug",
             "name": "Debug Server",
             "request": "launch",
             "type": "node-terminal",
             "cwd": "${workspaceFolder}/server",
-            "outFiles": ["${workspaceFolder}/build/**/*.js"]
+            "outFiles": [
+                "${workspaceFolder}/build/**/*.js"
+            ]
         },
         {
             "command": "pnpm start",
@@ -18,7 +30,9 @@
             "request": "launch",
             "type": "node-terminal",
             "cwd": "${workspaceFolder}/server",
-            "outFiles": ["${workspaceFolder}/build/**/*.js"]
+            "outFiles": [
+                "${workspaceFolder}/build/**/*.js"
+            ]
         },
         {
             "command": "pnpm typeorm:sync",
