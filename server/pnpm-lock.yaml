@@ -1,9 +1,12 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@types/cookie-parser': ^1.4.3
   '@types/debug': ^4.1.7
   '@types/express': ^4.17.13
   '@types/express-session': ^1.17.5
+  '@types/http-errors': ^1.8.2
+  '@types/morgan': ^1.9.3
   '@types/node': ^18.0.6
   cookie-parser: ~1.4.4
   cross-env: ^7.0.3
@@ -25,6 +28,7 @@ specifiers:
 dependencies:
   '@types/debug': 4.1.7
   '@types/express-session': 1.17.5
+  '@types/morgan': 1.9.3
   cookie-parser: 1.4.6
   cross-env: 7.0.3
   debug: 2.6.9
@@ -41,7 +45,9 @@ dependencies:
   typescript: 4.7.4
 
 devDependencies:
+  '@types/cookie-parser': 1.4.3
   '@types/express': 4.17.13
+  '@types/http-errors': 1.8.2
   '@types/node': 18.0.6
   ts-node: 10.9.1_tdn3ypgnfy6bmey2q4hu5jonwi
   ts-node-dev: 2.0.0_tdn3ypgnfy6bmey2q4hu5jonwi
@@ -140,6 +146,12 @@ packages:
     dependencies:
       '@types/node': 18.0.6
 
+  /@types/cookie-parser/1.4.3:
+    resolution: {integrity: sha512-CqSKwFwefj4PzZ5n/iwad/bow2hTCh0FlNAeWLtQM3JA/NX/iYagIpWG2cf1bQKQ2c9gU2log5VUCrn7LDOs0w==}
+    dependencies:
+      '@types/express': 4.17.13
+    dev: true
+
   /@types/debug/4.1.7:
     resolution: {integrity: sha512-9AonUzyTjXXhEOa0DnqpzZi6VHlqKMswga9EXjpXnnqxwLtdvPPtlO8evrI5D9S6asFRCQ6v+wpiUKbw+vKqyg==}
     dependencies:
@@ -167,8 +179,18 @@ packages:
       '@types/qs': 6.9.7
       '@types/serve-static': 1.13.10
 
+  /@types/http-errors/1.8.2:
+    resolution: {integrity: sha512-EqX+YQxINb+MeXaIqYDASb6U6FCHbWjkj4a1CKDBks3d/QiB2+PqBLyO72vLDgAO1wUI4O+9gweRcQK11bTL/w==}
+    dev: true
+
   /@types/mime/1.3.2:
     resolution: {integrity: sha512-YATxVxgRqNH6nHEIsvg6k2Boc1JHI9ZbH5iWFFv/MTkchz3b1ieGDa5T0a9RznNdI0KhVbdbWSN+KWWrQZRxTw==}
+
+  /@types/morgan/1.9.3:
+    resolution: {integrity: sha512-BiLcfVqGBZCyNCnCH3F4o2GmDLrpy0HeBVnNlyZG4fo88ZiE9SoiBe3C+2ezuwbjlEyT+PDZ17//TAlRxAn75Q==}
+    dependencies:
+      '@types/node': 18.0.6
+    dev: false
 
   /@types/ms/0.7.31:
     resolution: {integrity: sha512-iiUgKzV9AuaEkZqkOLDIvlQiL6ltuZd9tGcW3gwpnX8JbuiuhFlEGmmFXEXkN50Cvq7Os88IY2v0dkDqXYWVgA==}

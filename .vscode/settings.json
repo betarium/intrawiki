@@ -6,5 +6,10 @@
     "[typescriptreact]": {
         "editor.tabSize": 2,
         "editor.formatOnSave": true
+    },
+    "files.exclude": {
+        "**/node_modules/": true,
+        "**/build/": true,
+        "./docker-data/": true,
     }
 }

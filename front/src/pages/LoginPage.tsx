@@ -1,11 +1,14 @@
-import { useCallback, useState } from "react";
+import { useCallback, useContext, useState } from "react";
 import { useNavigate } from 'react-router-dom';
+import { AppContextDef } from "../contexts/AppContext";
+import PageFrame from "../views/PageFrame";
 
 function LoginPage() {
   const [account, setAccount] = useState("")
   const [password, setPassword] = useState("")
   const [error, setError] = useState<string>()
   const [loginProgress, setLoginProgress] = useState(false)
+  const appContext = useContext(AppContextDef)
 
   const navigator = useNavigate()
 
@@ -26,8 +29,11 @@ function LoginPage() {
       return
     }
 
+    appContext.setAuthInfo(res)
+    appContext.updatePage()
+
     navigator(res.redirectUrl)
-  }, [navigator, account, password])
+  }, [navigator, account, password, appContext])
 
   const onLogin = useCallback(async () => {
     setError("")
@@ -36,21 +42,22 @@ function LoginPage() {
   }, [onLoginRequest])
 
   return (
-    <div className="App">
-      <h1>Login</h1>
+    <PageFrame title="Login">
       <div>
         {error}
       </div>
-      <div>
-        Account: <input type="text" value={account} onChange={e => setAccount(e.target.value)} />
-      </div>
-      <div>
-        Password: <input type="password" value={password} onChange={e => setPassword(e.target.value)} />
-      </div>
-      <div>
-        <input type="button" value="Login" onClick={() => onLogin()} disabled={loginProgress} />
-      </div>
-    </div>
+      <form>
+        <div>
+          Account: <input type="text" value={account} onChange={e => setAccount(e.target.value)} />
+        </div>
+        <div>
+          Password: <input type="password" value={password} onChange={e => setPassword(e.target.value)} />
+        </div>
+        <div>
+          <input type="submit" value="Login" onClick={() => onLogin()} disabled={loginProgress} />
+        </div>
+      </form>
+    </PageFrame>
   );
 }
 

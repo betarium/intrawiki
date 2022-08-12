@@ -1,14 +1,17 @@
 import { useLocation } from "react-router";
+import PageFrame from "views/PageFrame";
+import useLocationQuery from "../common/useLocationQuery";
 
 function NotFoundPage() {
   const location = useLocation()
+  const query = useLocationQuery()
+
+  const page = query.get("page") ?? location.pathname
+
   return (
-    <div className="App">
-      <h1>Not Found</h1>
-      <header className="App-header">
-        <a href={"/edit?page=" + encodeURIComponent(location.pathname)}>edit</a>
-      </header>
-    </div>
+    <PageFrame title="Error - Not Found">
+      <a href={"/edit?page=" + encodeURIComponent(page) + "&new=1"}>edit</a>
+    </PageFrame>
   );
 }
 

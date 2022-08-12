@@ -1,0 +1,59 @@
+# Help
+
+## Spec
+
+The wiki format of this system partially conforms to GitHub Flavored Markdown.
+
+[GitHub Flavored Markdown](https://github.github.com/gfm/)
+
+## Format
+### Break Line
+
+```
+---
+```
+
+### Heading
+
+```
+# Heading1
+## Heading2
+### Heading3
+#### Heading4
+##### Heading5
+```
+
+### Code
+```
+<space><space><space><space>code
+<space><space><space><space><space><space>code
+<space><space><space><space>code
+```
+
+### Code Block
+```
+    ```
+    Code
+    Code
+    Code
+    ```
+```
+
+### List
+
+```
+* list item1
+* list item2
+* list item3
+```
+
+### Link
+```
+[link text](url)
+```
+
+### Keyword
+(extension)
+```
+[[keyword]]
+```

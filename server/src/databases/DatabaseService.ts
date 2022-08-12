@@ -1,5 +1,6 @@
 import { DataSource } from "typeorm";
 import { DefaultDataSource } from "./DefaultDataSource"
+import PageEntity from "./entities/PageEntity";
 // import UserEntity from "./entities/UserEntity"
 import { UserEntity } from "./entities/UserEntity"
 
@@ -25,7 +26,7 @@ export default class DatabaseService {
     console.log("insert data...")
 
     const user = new UserEntity()
-    user.id = 1
+    // user.id = 1
     user.account = "admin"
     user.password = "password"
     user.userName = "Administrator"
@@ -33,13 +34,23 @@ export default class DatabaseService {
     await DefaultDataSource.manager.insert(UserEntity, user)
 
     const guest = new UserEntity()
-    guest.id = 2
+    // guest.id = 2
     guest.account = "guest"
     guest.password = "password"
-    user.userName = "Guest"
+    guest.userName = "Guest"
     guest.email = "guest@localhost"
     guest.disabled = true
     await DefaultDataSource.manager.insert(UserEntity, guest)
+
+    const home = new PageEntity()
+    home.title = "/"
+    home.contents = "#Home"
+    await DefaultDataSource.manager.insert(PageEntity, home)
+
+    const help = new PageEntity()
+    help.title = "Help"
+    help.contents = "#Help"
+    await DefaultDataSource.manager.insert(PageEntity, help)
 
     console.log("initialize database complete.")
     // console.log("Saved a new user with id: " + user.id)

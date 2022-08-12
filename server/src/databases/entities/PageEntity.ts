@@ -3,7 +3,7 @@ import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 @Entity({ name: "pages" })
 export default class PageEntity {
 	@PrimaryGeneratedColumn()
-	id: number;
+	readonly id: number;
 
 	@Column()
 	title: string;
@@ -11,15 +11,23 @@ export default class PageEntity {
 	@Column({ nullable: true })
 	contents?: string;
 
+	@Column({ name: "create_user" })
+	createUser: number;
+
+	@Column({ name: "update_user" })
+	updateUser: number;
+
 	@Column({ name: "create_timestamp" })
-	createTimestamp: Date;
+	readonly createTimestamp: Date;
 
 	@Column({ name: "update_timestamp" })
 	updateTimestamp: Date;
 
 	constructor() {
-		this.id = -1;
+		this.id = undefined as any as number;
 		this.title = "";
+		this.createUser = 1
+		this.updateUser = 1
 		const date = new Date();
 		this.createTimestamp = date;
 		this.updateTimestamp = date;
