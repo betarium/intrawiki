@@ -253,7 +253,7 @@ function MarkDownLineView(props: { element: MarkDownElement, elementIndex: numbe
     return <a href={"/" + encodeURI(element.text ?? "")}>{element.text}</a>
   }
   else if (element.type === MarkDownElementType.link) {
-    return <a href={element.link} target="_blank">{element.text}</a>
+    return <a href={element.link} target="_blank" rel="noreferrer">{element.text}</a>
   }
   else if (element.type === MarkDownElementType.line) {
     return <hr />
