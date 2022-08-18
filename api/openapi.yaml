@@ -1,0 +1,340 @@
+openapi: 3.0.0
+info:
+  title: intrawiki
+  version: 0.1.0
+servers:
+  - url: 'http://localhost:4000/intrawiki-manage/api'
+paths:
+  "/auth":
+    get:
+      tags:
+        - Auth
+      operationId: GetAuthInfo
+      responses:
+        default:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthInfoResponse'
+  "/auth/login":
+    post:
+      tags:
+        - Auth
+      operationId: Login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        default:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+  "/auth/logout":
+    post:
+      tags:
+        - Auth
+      operationId: Logout
+      responses:
+        default:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResultResponse'
+  "/auth/change-password":
+    post:
+      tags:
+        - Auth
+      operationId: ChangePassword
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChangePasswordRequest'
+      responses:
+        default:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResultResponse'
+  "/users":
+    get:
+      tags:
+        - Users
+      operationId: GetUserList
+      responses:
+        default:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserListResponse'
+    put:
+      tags:
+        - Users
+      operationId: CreateUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        default:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+
+  "/users/{id}":
+    get:
+      tags:
+        - Users
+      operationId: GetUserDetail
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        default:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+    patch:
+      tags:
+        - Users
+      operationId: UpdateUser
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        default:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+    delete:
+      tags:
+        - Users
+      operationId: DeleteUser
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        default:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResultResponse'
+
+  "/pages":
+    put:
+      tags:
+        - Pages
+      operationId: CreatePage
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Page'
+      responses:
+        default:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Page'
+  "/pages/{id}":
+    get:
+      tags:
+        - Pages
+      operationId: GetPageDetail
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        default:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Page'
+    patch:
+      tags:
+        - Pages
+      operationId: UpdatePage
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Page'
+      responses:
+        default:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Page'
+    delete:
+      tags:
+        - Pages
+      operationId: DeletePage
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        default:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResultResponse'
+
+components:
+  schemas:
+    ApiResultResponse:
+      required:
+        - success
+        - code
+      type: object
+      properties:
+        success:
+          type: boolean
+        code:
+          type: string
+        message:
+          type: string
+    AuthInfoResponse:
+      required:
+        - loggedIn
+      type: object
+      properties:
+        loggedIn:
+          type: boolean
+        userId:
+          type: number
+        account:
+          type: string
+        userType:
+          type: string
+    LoginRequest:
+      required:
+        - account
+        - password
+      type: object
+      properties:
+        account:
+          type: string
+        password:
+          type: string
+    LoginResponse:
+      required:
+        - loggedIn
+      type: object
+      properties:
+        success:
+          type: boolean
+        loggedIn:
+          type: boolean
+        userId:
+          type: number
+        account:
+          type: string
+        redirectUrl:
+          type: string
+    ChangePasswordRequest:
+      required:
+        - password
+      type: object
+      properties:
+        password:
+          type: string
+    User:
+      required:
+        - id
+        - account
+        - userName
+        - userType
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        account:
+          type: string
+          example: guest
+        userName:
+          type: string
+          example: Guest
+        email:
+          type: string
+        userType:
+          type: string
+        disabled:
+          type: boolean
+    UserListResponse:
+      required:
+        - items
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+    Page:
+      required:
+        - id
+        - title
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        title:
+          type: string
+          example: Home Page
+        contents:
+          type: string
+        newFlag:
+          type: boolean

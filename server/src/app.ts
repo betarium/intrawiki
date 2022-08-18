@@ -5,6 +5,7 @@ import session from 'express-session'
 import cookieParser from 'cookie-parser'
 import logger from 'morgan'
 import { SessionModel } from 'web/SessionModel';
+import sessionFileStore from 'session-file-store'
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
@@ -22,8 +23,11 @@ app.use(express.static(CommonConfig.PUBLIC_DIR));
 app.set('view engine', 'pug')
 app.set('views', CommonConfig.PUBLIC_DIR)
 
+const FileStore = sessionFileStore(session)
+
 app.use(session({
-  secret: process.env.SESSION_SECRET ?? 'secret',
+  secret: CommonConfig.SESSION_SECRET ?? 'secret',
+  store: new FileStore({ path: CommonConfig.SESSION_PATH }),
   resave: false,
   saveUninitialized: false,
   cookie: {
@@ -48,10 +52,10 @@ function isIndexPage(path: string): boolean {
   const publicPage = [
     "/",
     "/index.html",
-    "/login",
-    "/logout",
-    "/error",
-    "/edit",
+    "/intrawiki-manage/login",
+    "/intrawiki-manage/logout",
+    "/intrawiki-manage/error",
+    "/intrawiki-manage/edit",
   ]
 
   if (publicPage.find(p => p === path) !== undefined) {
@@ -89,15 +93,15 @@ function isPublicUrl(path: string): boolean {
 
   const publicPath = [
     "/",
-    "/login",
-    "/logout",
-    "/api/auth/info",
-    "/api/auth/login",
-    "/api/auth/logout",
+    "/intrawiki-manage/login",
+    "/intrawiki-manage/logout",
+    "/intrawiki-manage/api/auth/info",
+    "/intrawiki-manage/api/auth/login",
+    "/intrawiki-manage/api/auth/logout",
   ]
 
   const publicDir = [
-    "/api/public/",
+    "/intrawiki-manage/api/public/",
     "/static/",
   ]
 
@@ -137,7 +141,7 @@ app.use(function (req, res, next) {
   }
   else if (req.session.userId === undefined) {
     console.info("Unauthorized access. path=" + req.path)
-    if (req.path.startsWith("/api/")) {
+    if (req.path.startsWith("/intrawiki-manage/api/")) {
       res.statusMessage = "Unauthorized"
       res.sendStatus(401)
     }
@@ -152,9 +156,9 @@ app.use(function (req, res, next) {
 })
 
 app.use('/', indexRouter);
-app.use('/api/users', usersRouter);
-app.use('/api/auth', authRouter);
-app.use('/api/pages', pageRouter);
+app.use('/intrawiki-manage/api/users', usersRouter);
+app.use('/intrawiki-manage/api/auth', authRouter);
+app.use('/intrawiki-manage/api/pages', pageRouter);
 app.use('/', publicRouter);
 
 // catch 404 and forward to error handler
@@ -171,7 +175,7 @@ app.use(function (err: any, req: express.Request, res: express.Response, next: e
   // render the error page
   res.status(err.status || 500);
 
-  if (req.path.startsWith("/api/")) {
+  if (req.path.startsWith("/intrawiki-manage/api/")) {
     res.send('"error"')
     return
   }

@@ -2,13 +2,17 @@ import ServerContext from 'web/ServerContext';
 import PageEntity from 'databases/entities/PageEntity';
 import express from 'express';
 import { SessionModel } from 'web/SessionModel';
+import { Page } from 'api/models/Page';
+import { ApiResultResponse } from 'api/models/ApiResultResponse';
 
 const router = express.Router();
 
+/*
 interface PageRequest {
   title: string
   contents?: string
 }
+*/
 
 declare module 'express-session' {
   interface SessionData extends SessionModel {
@@ -16,7 +20,7 @@ declare module 'express-session' {
 }
 
 router.post('/save', async function (req: express.Request, res: express.Response, next: express.NextFunction) {
-  const input = req.body as PageRequest
+  const input = req.body as Page
 
   if (input.title === undefined || input.title.length <= 0) {
     throw new Error("invalid parameter")
@@ -41,11 +45,6 @@ router.post('/save', async function (req: express.Request, res: express.Response
   res.send("OK");
 });
 
-interface ErrorResponse {
-  code: string
-  message: string
-}
-
 function fixTitle(title: string): string {
   return (title === "/" ? "/" : (title.startsWith("/") ? title.substring(1) : title))
 }
@@ -64,12 +63,12 @@ router.get('/', async function (req, res, next) {
   const page = await ServerContext.dataSource.manager.findOneBy(PageEntity, { title: title })
   if (page === undefined || page === null) {
     res.status(404)
-    const error = { code: "NotFound", message: "data not found" } as ErrorResponse
+    const error = { success: false, code: "NotFound", message: "data not found" } as ApiResultResponse
     res.json(error)
     return
   }
 
-  const output = { title: page?.title, contents: page?.contents } as PageRequest
+  const output = { id: page.id, title: page.title, contents: page.contents } as Page
   res.json(output)
 });
 

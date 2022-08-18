@@ -1,0 +1,26 @@
+version: '3'
+
+x-common-environment: &x-common-environment
+  SERVER_ENV: ${SERVER_ENV:-dev}
+  DOCKER_DATA_DIR: ./docker-data
+  DOCKER_BASE_DIR: /var/app/docker-data
+  DOCKER_HOST_INTERNAL: ${DOCKER_HOST_INTERNAL:-127.0.0.1}
+
+services:
+  api:
+    build:
+      context: docker/api
+    image: intrawiki-${SERVER_ENV}_api
+    restart: "no"
+    volumes:
+      - $DOCKER_DATA_DIR/api:$DOCKER_BASE_DIR/api
+    environment:
+      <<: *x-common-environment
+      OPENAPI_PACKAGE: ${OPENAPI_PACKAGE:-openapi}
+      OPENAPI_YAML_DIR: ${OPENAPI_YAML_DIR:-$DOCKER_BASE_DIR/api}
+      OPENAPI_YAML_FILE: ${OPENAPI_YAML_FILE:-$DOCKER_BASE_DIR/api/openapi.yaml}
+      OPENAPI_OUT_DIR: ${OPENAPI_OUT_DIR:-$DOCKER_BASE_DIR/api/generated}
+volumes:
+  server-pnpm-volume:
+  server-node-modules-volume:
+  cert-letsencrypt-volume:

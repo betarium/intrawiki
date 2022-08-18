@@ -31,10 +31,6 @@ class AppContextDummyImpl implements AppContext {
 
 export class AppContextImpl implements AppContext {
 
-  constructor() {
-    console.warn("app constractor")
-  }
-
   private _initializing: boolean = false
 
   private _initialized: boolean = false;

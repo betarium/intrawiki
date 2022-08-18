@@ -27,8 +27,6 @@ function TopFrame(props: { children: ReactElement[] }) {
 
   appContext.setUpdate(() => onUpdatePage())
 
-  console.info("TopFrame view")
-
   if (!(props.children[0].type === PublicFrame)) {
     throw Error("invalid children")
   }
@@ -44,7 +42,7 @@ function TopFrame(props: { children: ReactElement[] }) {
     init.current = true
 
     try {
-      const result = await fetch("/api/auth/info",
+      const result = await fetch("/intrawiki-manage/api/auth/info",
         {
           method: 'GET',
           headers: { 'Content-Type': 'application/json' },

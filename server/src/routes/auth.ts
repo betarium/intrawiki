@@ -1,11 +1,16 @@
 import ServerContext from 'web/ServerContext'
-import { UserEntity } from 'databases/entities/UserEntity'
+import UserEntity from 'databases/entities/UserEntity'
 import express from 'express'
 import { } from 'express-session'
 import { SessionModel } from 'web/SessionModel'
+import { LoginRequest } from 'api/models/LoginRequest'
+import { LoginResponse } from 'api/models/LoginResponse'
+import { AuthInfoResponse } from 'api/models/AuthInfoResponse'
+import { ApiResultResponse } from 'api/models/ApiResultResponse'
 
 const router = express.Router()
 
+/*
 interface LoginRequest {
   account: string
   password: string
@@ -21,6 +26,7 @@ export interface LoginResponse extends AuthInfoResponse {
   success: boolean
   redirectUrl?: string
 }
+*/
 
 declare module 'express-session' {
   interface SessionData extends SessionModel {
@@ -69,11 +75,12 @@ router.get('/info', async function (req: express.Request, res: express.Response,
 });
 
 router.post('/logout', async function (req: express.Request, res: express.Response, next: express.NextFunction) {
+  req.session.loggedIn = false
   req.session.destroy(() => { })
   if (req.session?.cookie !== undefined) {
     req.session.cookie.expires = new Date(1980, 1, 1)
   }
-  res.sendStatus(200)
+  res.json({ success: true, code: "SUCCESS" } as ApiResultResponse)
 });
 
 module.exports = router;

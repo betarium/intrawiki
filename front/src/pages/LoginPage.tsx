@@ -1,3 +1,5 @@
+import { AuthApi } from "api/apis/AuthApi";
+import ApiConfiguration from "common/ApiConfiguration";
 import { useCallback, useContext, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { AppContextDef } from "../contexts/AppContext";
@@ -14,7 +16,9 @@ function LoginPage() {
 
   const onLoginRequest = useCallback(async () => {
     const data = { account: account, password: password }
-    const result = await fetch("/api/auth/login",
+    // const api = new AuthApi(new ApiConfiguration())
+    // await api.login()
+    const result = await fetch("/intrawiki-manage/api/auth/login",
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

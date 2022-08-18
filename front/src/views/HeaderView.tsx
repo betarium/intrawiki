@@ -6,7 +6,6 @@ function HeaderView() {
   const styles = useStyles()
   const appContext = useContext(AppContextDef)
 
-  console.info("header view", appContext.authInfo)
   return (
     <header className={styles.header}>
       <div className={styles.headerInner}>
@@ -18,10 +17,13 @@ function HeaderView() {
                 User: {appContext.authInfo?.account}
               </span>
               <span>
+                <a href="/intrawiki-manage/config">Config</a>
+              </span>
+              <span>
                 <a href="/Help">Help</a>
               </span>
               <span>
-                <a href="/logout">Logout</a>
+                <a href="/intrawiki-manage/logout">Logout</a>
               </span>
             </>
           }

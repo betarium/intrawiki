@@ -11,6 +11,10 @@ import LogoutPage from './pages/LogoutPage';
 import TopFrame from './views/TopFrame';
 import PublicFrame from './views/PublicFrame';
 import RestrictFrame from './views/RestrictFrame';
+import UserListPage from 'pages/config/UserListPage';
+import ConfigPage from 'pages/config/ConfigPage';
+import ErrorPage from 'pages/ErrorPage';
+import UserDetailPage from 'pages/config/UserDetailPage';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -23,9 +27,9 @@ root.render(
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<HomePage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/logout" element={<LogoutPage />} />
-            <Route path="/error/404" element={<NotFoundPage />} />
+            <Route path="/intrawiki-manage/login" element={<LoginPage />} />
+            <Route path="/intrawiki-manage/logout" element={<LogoutPage />} />
+            <Route path="/intrawiki-manage/error/404" element={<NotFoundPage />} />
             <Route path='*' element={<LoginPage />} />
           </Routes>
         </BrowserRouter>
@@ -34,10 +38,15 @@ root.render(
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<HomePage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/logout" element={<LogoutPage />} />
-            <Route path="/edit" element={<EditPage />} />
-            <Route path="/error/404" element={<NotFoundPage />} />
+            <Route path="/intrawiki-manage/login" element={<LoginPage />} />
+            <Route path="/intrawiki-manage/logout" element={<LogoutPage />} />
+            <Route path="/intrawiki-manage/edit" element={<EditPage />} />
+            <Route path="/intrawiki-manage/config" element={<ConfigPage />} />
+            <Route path="/intrawiki-manage/config/users" element={<UserListPage />} />
+            <Route path="/intrawiki-manage/config/users/add" element={<UserDetailPage />} />
+            <Route path="/intrawiki-manage/config/users/:id" element={<UserDetailPage />} />
+            <Route path="/intrawiki-manage/error/404" element={<NotFoundPage />} />
+            <Route path="/intrawiki-manage/error" element={<ErrorPage />} />
             <Route path='*' element={<ViewPage />} />
           </Routes>
         </BrowserRouter>

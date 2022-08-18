@@ -1,8 +1,7 @@
 import "reflect-metadata"
 import { DataSource } from "typeorm"
 import PageEntity from "./entities/PageEntity"
-//import { UserEntity } from "@/databases/entities/UserEntity"
-import { UserEntity } from "./entities/UserEntity"
+import UserEntity from "./entities/UserEntity"
 
 export const DefaultDataSource = new DataSource({
     type: "sqlite",

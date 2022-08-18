@@ -1,8 +1,7 @@
 import { DataSource } from "typeorm";
 import { DefaultDataSource } from "./DefaultDataSource"
 import PageEntity from "./entities/PageEntity";
-// import UserEntity from "./entities/UserEntity"
-import { UserEntity } from "./entities/UserEntity"
+import UserEntity from "./entities/UserEntity"
 
 export default class DatabaseService {
 

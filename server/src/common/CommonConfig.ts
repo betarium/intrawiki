@@ -60,6 +60,14 @@ export default class CommonConfig {
     return publicPath
   }
 
+  static get SESSION_PATH(): string {
+    return this.getStringOrDefault("SESSION_PATH") ?? (this._rootDir + "/tmp/session");
+  }
+
+  static get SESSION_SECRET(): string {
+    return this.getStringOrDefault("SESSION_SECRET") ?? 'secret';
+  }
+
   static get DB_HOST(): string {
     return this.getStringOrDefault("DB_HOST") ?? "127.0.0.1";
   }

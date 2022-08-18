@@ -1,3 +1,5 @@
+import { AuthApi } from "api/apis/AuthApi";
+import ApiConfiguration from "common/ApiConfiguration";
 import { useCallback, useContext } from "react";
 import { useNavigate } from 'react-router-dom';
 import { AppContextDef } from "../contexts/AppContext";
@@ -9,12 +11,8 @@ function LogoutPage() {
 
   const onInit = useCallback(async () => {
     try {
-      await fetch("/api/auth/logout",
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-        }
-      )
+      const api = new AuthApi(new ApiConfiguration())
+      await api.logout()
 
       appContext.setAuthInfo(undefined)
       appContext.updatePage()

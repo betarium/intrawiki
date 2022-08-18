@@ -1,7 +1,8 @@
+import { AuthApi } from "api/apis/AuthApi";
+import ApiConfiguration from "common/ApiConfiguration";
 import { useCallback, useContext } from "react";
 import PageOuterFrame from "views/PageOuterFrame";
 import { AppContextDef } from "../contexts/AppContext";
-import { AuthInfoResponse } from "../models/AuthInfoResponse";
 import ContentsView from "../views/ContentsView";
 import PageFrame from "../views/PageFrame";
 
@@ -10,19 +11,9 @@ function HomePage() {
 
   const onInit = useCallback(async () => {
     try {
-      const result = await fetch("/api/auth/info",
-        {
-          method: 'GET',
-          headers: { 'Content-Type': 'application/json' },
-          //        body: JSON.stringify(data)
-        }
-      )
+      const api = new AuthApi(new ApiConfiguration())
+      const res = await api.getAuthInfo()
 
-      if (result.status !== 200) {
-        return
-      }
-
-      const res = await result.json() as AuthInfoResponse
       if (!res.loggedIn) {
         return
       }
@@ -38,7 +29,7 @@ function HomePage() {
     return (
       <PageFrame title="Home" onInit={onInit}>
         <div>
-          <a href="/login">login</a>
+          <a href="/intrawiki-manage/login">login</a>
         </div>
       </PageFrame>
     )

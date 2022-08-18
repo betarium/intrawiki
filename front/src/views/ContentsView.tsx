@@ -22,7 +22,7 @@ function ContentsView() {
 
     console.info("page load")
     try {
-      const result = await fetch("/api/pages/?title=" + location.pathname,
+      const result = await fetch("/intrawiki-manage/api/pages/?title=" + location.pathname,
         {
           method: 'GET',
           headers: { 'Content-Type': 'application/json' },
@@ -61,7 +61,7 @@ function ContentsView() {
         <>
           <MarkDownView contents={page.contents ?? ""} />
           <div>
-            <a href={"/edit?page=" + encodeURIComponent(location.pathname)}>edit</a>
+            <a href={"/intrawiki-manage/edit?page=" + encodeURIComponent(location.pathname)}>edit</a>
           </div>
         </>
       }

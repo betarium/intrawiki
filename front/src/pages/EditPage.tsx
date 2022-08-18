@@ -32,7 +32,7 @@ function EditPage() {
   const onInit = useCallback(async () => {
     console.info("page load")
     try {
-      const result = await fetch("/api/pages/?title=" + pageName,
+      const result = await fetch("/intrawiki-manage/api/pages/?title=" + pageName,
         {
           method: 'GET',
           headers: { 'Content-Type': 'application/json' },
@@ -54,15 +54,9 @@ function EditPage() {
     }
   }, [pageName])
 
-  // useEffect(() => {
-  //   if (!newFlag) {
-  //     onInit()
-  //   }
-  // }, [onInit])
-
   const onSave = useCallback(async () => {
     const data = { title: pageName, contents: contents } as PageRequest
-    const result = await fetch("/api/pages/save",
+    const result = await fetch("/intrawiki-manage/api/pages/save",
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
