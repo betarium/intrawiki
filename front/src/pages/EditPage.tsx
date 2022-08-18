@@ -30,7 +30,6 @@ function EditPage() {
   }
 
   const onInit = useCallback(async () => {
-    console.info("page load")
     try {
       const result = await fetch("/intrawiki-manage/api/pages/?title=" + pageName,
         {

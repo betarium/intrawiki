@@ -27,9 +27,10 @@ root.render(
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<HomePage />} />
-            <Route path="/intrawiki-manage/login" element={<LoginPage />} />
-            <Route path="/intrawiki-manage/logout" element={<LogoutPage />} />
-            <Route path="/intrawiki-manage/error/404" element={<NotFoundPage />} />
+            <Route path={process.env.REACT_APP_MANAGE_PATH + "/login"} element={<LoginPage />} />
+            <Route path={process.env.REACT_APP_MANAGE_PATH + "/logout"} element={<LogoutPage />} />
+            <Route path={process.env.REACT_APP_MANAGE_PATH + "/error/404"} element={<NotFoundPage />} />
+            <Route path={process.env.REACT_APP_MANAGE_PATH + "/error"} element={<ErrorPage />} />
             <Route path='*' element={<LoginPage />} />
           </Routes>
         </BrowserRouter>
@@ -38,15 +39,15 @@ root.render(
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<HomePage />} />
-            <Route path="/intrawiki-manage/login" element={<LoginPage />} />
-            <Route path="/intrawiki-manage/logout" element={<LogoutPage />} />
-            <Route path="/intrawiki-manage/edit" element={<EditPage />} />
-            <Route path="/intrawiki-manage/config" element={<ConfigPage />} />
-            <Route path="/intrawiki-manage/config/users" element={<UserListPage />} />
-            <Route path="/intrawiki-manage/config/users/add" element={<UserDetailPage />} />
-            <Route path="/intrawiki-manage/config/users/:id" element={<UserDetailPage />} />
-            <Route path="/intrawiki-manage/error/404" element={<NotFoundPage />} />
-            <Route path="/intrawiki-manage/error" element={<ErrorPage />} />
+            <Route path={process.env.REACT_APP_MANAGE_PATH + "/login"} element={<LoginPage />} />
+            <Route path={process.env.REACT_APP_MANAGE_PATH + "/logout"} element={<LogoutPage />} />
+            <Route path={process.env.REACT_APP_MANAGE_PATH + "/edit"} element={<EditPage />} />
+            <Route path={process.env.REACT_APP_MANAGE_PATH + "/config"} element={<ConfigPage />} />
+            <Route path={process.env.REACT_APP_MANAGE_PATH + "/config/users"} element={<UserListPage />} />
+            <Route path={process.env.REACT_APP_MANAGE_PATH + "/config/users/add"} element={<UserDetailPage />} />
+            <Route path={process.env.REACT_APP_MANAGE_PATH + "/config/users/:id"} element={<UserDetailPage />} />
+            <Route path={process.env.REACT_APP_MANAGE_PATH + "/error/404"} element={<NotFoundPage />} />
+            <Route path={process.env.REACT_APP_MANAGE_PATH + "/error"} element={<ErrorPage />} />
             <Route path='*' element={<ViewPage />} />
           </Routes>
         </BrowserRouter>

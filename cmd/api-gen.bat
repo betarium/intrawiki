@@ -1,4 +1,4 @@
-call %~dp0\init-env.bat
+call %~dp0\init.bat
 
 mkdir docker-data\api
 
