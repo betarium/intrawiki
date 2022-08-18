@@ -29,7 +29,7 @@ app.use(session({
   secret: CommonConfig.SESSION_SECRET ?? 'secret',
   store: new FileStore({ path: CommonConfig.SESSION_PATH }),
   resave: false,
-  saveUninitialized: false,
+  saveUninitialized: true,
   cookie: {
     httpOnly: true,
     secure: (CommonConfig.NODE_ENV === 'production'),

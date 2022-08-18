@@ -43,7 +43,7 @@ function MarkDownView(props: { contents: string }) {
   return (
     <div className="MarkDown">
       {elements.map((item, index) =>
-        <MarkDownLineView element={item} elementIndex={index} elementList={elements} />
+        <MarkDownLineView element={item} key={"line-" + (index + 1)} elementIndex={index} elementList={elements} />
       )}
     </div>
   )
@@ -52,12 +52,9 @@ function MarkDownView(props: { contents: string }) {
 export default MarkDownView;
 
 function parseMarkDownLine(line: string, state: MarkDownState): MarkDownElement[] {
-  console.debug("line: " + line)
-
   const elements: MarkDownElement[] = []
 
   if (state.codeMode) {
-    console.warn("code mode check!!")
     if (line.startsWith("```")) {
       state.codeMode = false
       const item = { type: MarkDownElementType.code, end: true } as MarkDownElement

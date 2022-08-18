@@ -10,7 +10,6 @@ services:
   api:
     build:
       context: docker/api
-    image: intrawiki-${SERVER_ENV}_api
     restart: "no"
     volumes:
       - $DOCKER_DATA_DIR/api:$DOCKER_BASE_DIR/api

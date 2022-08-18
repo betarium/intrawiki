@@ -7,13 +7,6 @@ import { ApiResultResponse } from 'api/models/ApiResultResponse';
 
 const router = express.Router();
 
-/*
-interface PageRequest {
-  title: string
-  contents?: string
-}
-*/
-
 declare module 'express-session' {
   interface SessionData extends SessionModel {
   }

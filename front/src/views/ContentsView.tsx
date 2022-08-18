@@ -1,3 +1,5 @@
+import { PagesApi, ResponseError } from "api";
+import ApiConfiguration from "common/ApiConfiguration";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
 import MarkDownView from "./MarkDownView";
@@ -20,26 +22,17 @@ function ContentsView() {
     }
     init.current = true
 
-    console.info("page load")
     try {
-      const result = await fetch("/intrawiki-manage/api/pages/?title=" + location.pathname,
-        {
-          method: 'GET',
-          headers: { 'Content-Type': 'application/json' },
-          //        body: JSON.stringify(data)
-        }
-      )
-
-      if (result.status === 404) {
-        navigator("/error/404?page=" + encodeURIComponent(location.pathname))
-        // setError("not found")
-        return
-      }
-
-      const res = await result.json() as PageRequest
+      const api = new PagesApi(new ApiConfiguration())
+      const res = await api.getPageForTitle({ title: location.pathname })
       setPage(res)
     }
     catch (ex) {
+      if (ex instanceof ResponseError && ex.response.status === 404) {
+        navigator("/error/404?page=" + encodeURIComponent(location.pathname))
+        return
+      }
+
       console.error("page error", ex)
       setError("not found")
     }

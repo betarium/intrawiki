@@ -4,6 +4,8 @@ import { AuthInfoResponse } from "../models/AuthInfoResponse";
 import HeaderView from "./HeaderView";
 import PublicFrame from "./PublicFrame";
 import RestrictFrame from "views/RestrictFrame";
+import ApiConfiguration from "common/ApiConfiguration";
+import { AuthApi, ResponseError } from "api";
 
 class AppContextHolder {
   static context: AppContextImpl | undefined
@@ -21,7 +23,6 @@ function TopFrame(props: { children: ReactElement[] }) {
   }
 
   const onUpdatePage = useCallback(() => {
-    console.info("onUpdatePage:" + update)
     setUpdate(update + 1)
   }, [setUpdate, update])
 
@@ -42,20 +43,8 @@ function TopFrame(props: { children: ReactElement[] }) {
     init.current = true
 
     try {
-      const result = await fetch("/intrawiki-manage/api/auth/info",
-        {
-          method: 'GET',
-          headers: { 'Content-Type': 'application/json' },
-          //        body: JSON.stringify(data)
-        }
-      )
-
-      if (result.status !== 200) {
-        setLoaded(true)
-        return
-      }
-
-      const res = await result.json() as AuthInfoResponse
+      const api = new AuthApi(new ApiConfiguration())
+      const res = await api.getAuthInfo()
       if (!res.loggedIn) {
         setLoaded(true)
         return
@@ -66,7 +55,13 @@ function TopFrame(props: { children: ReactElement[] }) {
       setLoaded(true)
     }
     catch (ex) {
-      console.error("page error", ex)
+      if (ex instanceof ResponseError && ex.response.status === 401) {
+        appContext.setAuthInfo(undefined)
+        setLoaded(true)
+        return
+      }
+
+      console.error("page error.", ex)
     }
   }, [setLoaded, appContext])
 

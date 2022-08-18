@@ -2,7 +2,7 @@ import ServerContext from 'web/ServerContext';
 import UserEntity from 'databases/entities/UserEntity';
 import express from 'express';
 import { User } from 'api/models/User';
-import { UserListResponse } from 'api/models';
+import { ApiResultResponse, UserListResponse } from 'api/models';
 
 const router = express.Router();
 
@@ -28,17 +28,23 @@ router.get('/:id', async function (req: express.Request, res: express.Response, 
 });
 
 router.put('/', async function (req: express.Request, res: express.Response, next: express.NextFunction) {
-  const input = req.body as User
+  try {
+    const input = req.body as User
 
-  let user = new UserEntity()
-  user.account = input.account
-  user.email = input.email
-  user.userName = input.userName
+    let user = new UserEntity()
+    user.account = input.account
+    user.email = input.email
+    user.userName = input.userName
 
-  user = await ServerContext.dataSource.manager.save(user)
+    user = await ServerContext.dataSource.manager.save(user)
 
-  const output = { id: user.id, account: user.account, email: user.email, userName: user.userName, userType: user.userType } as User
-  res.json(output)
+    const output = { id: user.id, account: user.account, email: user.email, userName: user.userName, userType: user.userType } as User
+    res.json(output)
+  }
+  catch (ex) {
+    res.statusCode = 500
+    res.json({ success: false, code: "Server Error" } as ApiResultResponse)
+  }
 });
 
 router.patch('/:id', async function (req: express.Request, res: express.Response, next: express.NextFunction) {

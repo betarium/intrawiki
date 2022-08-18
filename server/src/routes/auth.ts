@@ -10,24 +10,6 @@ import { ApiResultResponse } from 'api/models/ApiResultResponse'
 
 const router = express.Router()
 
-/*
-interface LoginRequest {
-  account: string
-  password: string
-}
-
-interface AuthInfoResponse {
-  loggedIn: boolean
-  userId?: number
-  account?: string
-}
-
-export interface LoginResponse extends AuthInfoResponse {
-  success: boolean
-  redirectUrl?: string
-}
-*/
-
 declare module 'express-session' {
   interface SessionData extends SessionModel {
   }
@@ -37,39 +19,47 @@ router.post('/login', async function (req: express.Request, res: express.Respons
   const input = req.body as LoginRequest
   console.log("login request. account=" + input.account)
 
-  const errorOutput = { success: false, redirectUrl: undefined } as LoginResponse
+  try {
+    const errorOutput = { success: false, redirectUrl: undefined } as LoginResponse
 
-  if (input.account === undefined || input.account.length <= 0) {
+    if (input.account === undefined || input.account.length <= 0) {
+      res.statusCode = 401
+      res.json(errorOutput)
+      return
+    }
+
+    const user = await ServerContext.dataSource.manager.findOneBy<UserEntity>(UserEntity, { account: input.account })
+    if (user === undefined || user === null || user.account !== input.account || user.disabled) {
+      res.statusCode = 401
+      res.json(errorOutput)
+      return
+    }
+
+    if ((user.password?.length ?? 0) > 0 && user?.password === input.password) {
+      req.session.loggedIn = true
+      req.session.userId = user.id
+      req.session.account = user.account
+      const output = { success: true, redirectUrl: "/", loggedIn: true, userId: user.id, account: user.account } as LoginResponse
+      console.log("login success. account=" + input.account + " ip=" + req.ip)
+      res.json(output)
+      return
+    }
+
     res.statusCode = 401
     res.json(errorOutput)
-    return
   }
-
-  const user = await ServerContext.dataSource.manager.findOneBy<UserEntity>(UserEntity, { account: input.account })
-  if (user === undefined || user === null || user.account !== input.account || user.disabled) {
-    res.statusCode = 401
-    res.json(errorOutput)
-    return
+  catch (ex) {
+    res.statusCode = 500
+    res.json({ success: false, code: "Server Error" } as ApiResultResponse)
   }
-
-  if ((user.password?.length ?? 0) > 0 && user?.password === input.password) {
-    req.session.loggedIn = true
-    req.session.userId = user.id
-    req.session.account = user.account
-    const output = { success: true, redirectUrl: "/", loggedIn: true, userId: user.id, account: user.account } as LoginResponse
-    console.log("login success. account=" + input.account + " ip=" + req.ip)
-    res.json(output)
-    return
-  }
-
-  res.statusCode = 401
-  res.json(errorOutput)
 });
 
 router.get('/info', async function (req: express.Request, res: express.Response, next: express.NextFunction) {
   const output = { loggedIn: req.session?.loggedIn ?? false, userId: req.session?.userId, account: req.session?.account } as AuthInfoResponse
   if (!output.loggedIn) {
-    res.status(204)
+    res.status(401)
+    res.json({})
+    return
   }
   res.json(output)
 });

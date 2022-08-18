@@ -1,8 +1,8 @@
-import { makeStyles, useScrollTrigger } from "@material-ui/core";
-import { User, UserListResponse, UsersApi } from "api";
+import { makeStyles } from "@material-ui/core";
+import { User, UsersApi } from "api";
 import ApiConfiguration from "common/ApiConfiguration";
 import { useCallback, useState } from "react";
-import { useNavigate, useParams } from "react-router";
+import { useParams } from "react-router";
 import PageFrame from "views/PageFrame";
 
 function UserDetailPage() {
@@ -13,13 +13,14 @@ function UserDetailPage() {
   const id = params["id"]
 
   const [newFlag, setNewFlag] = useState<boolean>((id === null || id === undefined || id.length === 0))
-  const [userId, setUserId] = useState<number | undefined>((!newFlag && id !== undefined) ? parseInt(id) : undefined)
+  const [userId, setUserId] = useState<number>((!newFlag && id !== undefined) ? parseInt(id) : -1)
 
-  const [user, setUser] = useState<User | undefined>(newFlag ? ({} as User) : undefined)
+  const initUser = { account: "", userName: "", email: "" } as User
+  const [user, setUser] = useState<User>(initUser)
 
   const onInit = useCallback(async () => {
     try {
-      if (userId === undefined) {
+      if (userId === -1) {
         return
       }
 
@@ -30,25 +31,25 @@ function UserDetailPage() {
     catch (ex) {
       console.error("api error", ex)
     }
-  }, [setUser])
+  }, [userId, setUser])
 
   const setAccount = useCallback((value: string) => {
-    if (user !== undefined) {
+    if (newFlag || user.id !== undefined) {
       setUser({ ...user, account: value })
     }
-  }, [user, setUser])
+  }, [user, setUser, newFlag])
 
   const setEmail = useCallback((value: string) => {
-    if (user !== undefined) {
+    if (newFlag || user.id !== undefined) {
       setUser({ ...user, email: value })
     }
-  }, [user, setUser])
+  }, [user, setUser, newFlag])
 
   const setName = useCallback((value: string) => {
-    if (user !== undefined) {
+    if (newFlag || user.id !== undefined) {
       setUser({ ...user, userName: value })
     }
-  }, [user, setUser])
+  }, [user, setUser, newFlag])
 
   const onSave = useCallback(async () => {
     try {

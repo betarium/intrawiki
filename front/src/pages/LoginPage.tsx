@@ -16,17 +16,8 @@ function LoginPage() {
 
   const onLoginRequest = useCallback(async () => {
     const data = { account: account, password: password }
-    // const api = new AuthApi(new ApiConfiguration())
-    // await api.login()
-    const result = await fetch("/intrawiki-manage/api/auth/login",
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      }
-    )
-
-    const res = await result.json()
+    const api = new AuthApi(new ApiConfiguration())
+    const res = await api.login({ loginRequest: data })
     setLoginProgress(false)
     if (!res.success) {
       setError("Login failed.")
@@ -36,7 +27,7 @@ function LoginPage() {
     appContext.setAuthInfo(res)
     appContext.updatePage()
 
-    navigator(res.redirectUrl)
+    navigator(res.redirectUrl ?? "/")
   }, [navigator, account, password, appContext])
 
   const onLogin = useCallback(async () => {

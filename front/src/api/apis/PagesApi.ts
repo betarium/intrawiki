@@ -37,6 +37,10 @@ export interface GetPageDetailRequest {
     id: number;
 }
 
+export interface GetPageForTitleRequest {
+    title: string;
+}
+
 export interface UpdatePageRequest {
     id: number;
     page: Page;
@@ -131,6 +135,38 @@ export class PagesApi extends runtime.BaseAPI {
      */
     async getPageDetail(requestParameters: GetPageDetailRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Page> {
         const response = await this.getPageDetailRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     */
+    async getPageForTitleRaw(requestParameters: GetPageForTitleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Page>> {
+        if (requestParameters.title === null || requestParameters.title === undefined) {
+            throw new runtime.RequiredError('title','Required parameter requestParameters.title was null or undefined when calling getPageForTitle.');
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters.title !== undefined) {
+            queryParameters['title'] = requestParameters.title;
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/pages`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => PageFromJSON(jsonValue));
+    }
+
+    /**
+     */
+    async getPageForTitle(requestParameters: GetPageForTitleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Page> {
+        const response = await this.getPageForTitleRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

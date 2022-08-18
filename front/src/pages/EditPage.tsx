@@ -1,4 +1,6 @@
 import { makeStyles } from "@material-ui/core";
+import { PagesApi } from "api";
+import ApiConfiguration from "common/ApiConfiguration";
 import { useCallback, useState } from "react";
 import { useNavigate } from "react-router";
 import useLocationQuery from "../common/useLocationQuery";
@@ -31,19 +33,8 @@ function EditPage() {
 
   const onInit = useCallback(async () => {
     try {
-      const result = await fetch("/intrawiki-manage/api/pages/?title=" + pageName,
-        {
-          method: 'GET',
-          headers: { 'Content-Type': 'application/json' },
-          //        body: JSON.stringify(data)
-        }
-      )
-
-      if (result.status === 404) {
-        return
-      }
-
-      const res = await result.json() as PageRequest
+      const api = new PagesApi(new ApiConfiguration())
+      const res = await api.getPageForTitle({ title: pageName })
       setPageInfo(res)
       setContents(res.contents ?? "")
     }
@@ -80,7 +71,7 @@ function EditPage() {
         {(newFlag || pageInfo !== undefined) &&
           <>
             <div>
-              <textarea className={styles.contents} onChange={(e) => setContents(e.target.value)} >{contents}</textarea>
+              <textarea className={styles.contents} onChange={(e) => setContents(e.target.value)} value={contents} />
             </div>
             <div>
               <button onClick={() => onSave()} >Save</button>
