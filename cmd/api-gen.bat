@@ -6,7 +6,7 @@ copy api\openapi.yaml docker-data\api\
 
 rmdir /s /q docker-data\api\generated
 
-docker-compose -p %DOCKER_PROJECT% --env-file %ENV_FILE% -f docker-compose.yml run api generate -i openapi.yaml -g typescript-fetch --additional-properties=typescriptThreePlus=true -o /var/app/docker-data/api/generated
+docker-compose -p %DOCKER_PROJECT% --env-file %ENV_FILE% -f docker-compose.yml run --rm api generate -i openapi.yaml -g typescript-fetch --additional-properties=typescriptThreePlus=true -o /var/app/docker-data/api/generated
 
 rmdir /s /q docker-data\api\generated\.openapi-generator
 del docker-data\api\generated\.openapi-generator-ignore

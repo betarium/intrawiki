@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "es6",
     "lib": [
       "dom",
       "dom.iterable",
@@ -29,4 +29,5 @@
     "node_modules"
   ],
   "extends": "./tsconfig.paths.json",
+  "references": [{ "path": "./tsconfig.node.json" }]
 }

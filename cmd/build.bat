@@ -12,5 +12,7 @@ cd server
 call pnpm install --frozen-lockfile
 call pnpm build
 
-touch 5
+cd ..
+
+timeout 5
 

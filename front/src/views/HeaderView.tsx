@@ -1,4 +1,4 @@
-import { makeStyles } from "@material-ui/core";
+import { makeStyles } from "@griffel/react";
 import { useContext } from "react";
 import { AppContextDef } from "../contexts/AppContext";
 
@@ -38,9 +38,9 @@ export default HeaderView;
 const useStyles = makeStyles({
   header: {
     width: "100%",
-    height: 20,
+    height: "20px",
     backgroundColor: "silver",
-    marginBottom: 4,
+    marginBottom: "4px",
   },
   headerInner: {
     display: "flex",
@@ -49,15 +49,15 @@ const useStyles = makeStyles({
   headerTitle: {
     marginTop: 0,
     marginBottom: 0,
-    paddingLeft: 4,
-    fontSize: 16,
+    paddingLeft: "4px",
+    fontSize: "16px",
     display: "inline-block",
     justifySelf: "flex-start",
   },
   headerAction: {
     display: "flex",
     justifySelf: "flex-end",
-    paddingRight: 10,
-    gap: 10,
+    paddingRight: "10px",
+    gridGap: "10px",
   },
 })

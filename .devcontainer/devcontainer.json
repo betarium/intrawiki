@@ -1,0 +1,15 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
+// https://github.com/microsoft/vscode-dev-containers/tree/v0.245.0/containers/alpine
+{
+	"name": "intrawiki-dev",
+
+	"dockerComposeFile": [
+		"docker-compose.yml"
+	],
+
+	"service": "dev",
+
+	"workspaceFolder": "/workspace",
+
+	"remoteUser": "vscode"
+}

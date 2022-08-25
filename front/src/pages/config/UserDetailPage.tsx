@@ -1,4 +1,4 @@
-import { makeStyles } from "@material-ui/core";
+import { makeStyles } from "@griffel/react";
 import { User, UsersApi } from "api";
 import ApiConfiguration from "common/ApiConfiguration";
 import { useCallback, useState } from "react";
@@ -114,17 +114,17 @@ export default UserDetailPage;
 const useStyles = makeStyles({
   contents: {
     width: "100%",
-    minHeight: 200,
+    minHeight: "200px",
   },
   label: {
     display: "inline-block",
-    minWidth: 200,
+    minWidth: "200px",
     color: "white",
     backgroundColor: "darkgray",
-    margin: 2,
+    marginWidth: "2px",
   },
   value: {
     display: "inline-block",
-    marginLeft: 10,
+    marginLeft: "10px",
   },
 })

@@ -1,4 +1,4 @@
-import { makeStyles } from "@material-ui/core";
+import { makeStyles } from "@griffel/react";
 import { PagesApi } from "api";
 import ApiConfiguration from "common/ApiConfiguration";
 import { useCallback, useState } from "react";
@@ -91,6 +91,6 @@ export default EditPage;
 const useStyles = makeStyles({
   contents: {
     width: "100%",
-    minHeight: 200,
+    minHeight: "200px",
   },
 })

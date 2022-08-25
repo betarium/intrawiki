@@ -1,4 +1,4 @@
-import { makeStyles } from "@material-ui/core";
+import { makeStyles } from "@griffel/react"
 
 interface MarkDownState {
   codeMode: boolean
@@ -267,7 +267,7 @@ function MarkDownLineView(props: { element: MarkDownElement, elementIndex: numbe
 const useStyles = makeStyles({
   header1: {
     backgroundColor: "mediumblue",
-    paddingLeft: 4,
+    paddingLeft: "4px",
     color: "white",
   },
   header2: {
@@ -275,10 +275,10 @@ const useStyles = makeStyles({
     // borderBottomWidth: 2,
     // borderBottomStyle: "solid",
     borderLeftColor: "cornflowerblue",
-    borderLeftWidth: 4,
+    borderLeftWidth: "4px",
     borderLeftStyle: "solid",
-    paddingLeft: 4,
-    background: "linear-gradient(to right, cornflowerblue, white)"
+    paddingLeft: "4px",
+    backgroundImage: "linear-gradient(to right, cornflowerblue, white)"
     // backgroundColor: "lightblue",
     // borderBottomColor: "darkblue",
     // borderBottomWidth: 2,
@@ -291,12 +291,12 @@ const useStyles = makeStyles({
   header3: {
     // borderBottomColor: "darkblue",
     borderLeftColor: "cornflowerblue",
-    borderLeftWidth: 4,
+    borderLeftWidth: "4px",
     borderLeftStyle: "solid",
-    borderBottomWidth: 2,
+    borderBottomWidth: "2px",
     borderBottomStyle: "solid",
-    paddingLeft: 4,
-    borderImage: "linear-gradient(to right, cornflowerblue 0%, white 100%)",
+    paddingLeft: "4px",
+    borderImageSource: "linear-gradient(to right, cornflowerblue 0%, white 100%)",
     borderImageSlice: 1,
   },
   header4: {
@@ -305,21 +305,21 @@ const useStyles = makeStyles({
     // borderBottomWidth: 2,
     // borderBottomStyle: "solid",
     borderLeftColor: "cornflowerblue",
-    borderLeftWidth: 4,
+    borderLeftWidth: "4px",
     borderLeftStyle: "solid",
-    paddingLeft: 4,
+    paddingLeft: "4px",
   },
   header5: {
     textDecorationLine: "underline",
     textDecorationColor: "cornflowerblue",
-    textDecorationThickness: 2,
-    paddingLeft: 4,
+    textDecorationThickness: "2px",
+    paddingLeft: "4px",
   },
   code: {
     display: "block",
     backgroundColor: "silver",
     whiteSpace: "pre-wrap",
-    marginTop: 10,
-    marginBottom: 10,
+    marginTop: "10px",
+    marginBottom: "10px",
   }
 })

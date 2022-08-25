@@ -1,4 +1,4 @@
-import { makeStyles } from "@material-ui/core";
+import { makeStyles } from "@griffel/react";
 import { ReactElement, useCallback, useEffect, useRef, useState } from "react";
 import PageOuterFrame from "./PageOuterFrame";
 
@@ -63,15 +63,15 @@ export default PageFrame;
 const useStyles = makeStyles({
   PageTitle: {
     backgroundColor: "mediumblue",
-    paddingLeft: 4,
+    paddingLeft: "4px",
     color: "white",
   },
   PageFrame: {
-    paddingLeft: 10,
-    paddingRight: 10,
+    paddingLeft: "10px",
+    paddingRight: "10px",
   },
   PageFrameContents: {
-    paddingLeft: 10,
-    paddingRight: 10,
+    paddingLeft: "10px",
+    paddingRight: "10px",
   }
 })

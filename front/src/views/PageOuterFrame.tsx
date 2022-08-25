@@ -1,4 +1,4 @@
-import { makeStyles } from "@material-ui/core";
+import { makeStyles } from "@griffel/react";
 import { ReactElement } from "react";
 
 function PageOuterFrame(props: { children: ReactElement }) {
@@ -14,7 +14,7 @@ export default PageOuterFrame;
 
 const useStyles = makeStyles({
   PageFrame: {
-    paddingLeft: 10,
-    paddingRight: 10,
+    paddingLeft: "10px",
+    paddingRight: "10px",
   },
 })
