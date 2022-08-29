@@ -24,7 +24,13 @@ export interface ChangePasswordRequest {
      * @type {string}
      * @memberof ChangePasswordRequest
      */
-    password: string;
+    oldPassword: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ChangePasswordRequest
+     */
+    newPassword: string;
 }
 
 /**
@@ -32,7 +38,8 @@ export interface ChangePasswordRequest {
  */
 export function instanceOfChangePasswordRequest(value: object): boolean {
     let isInstance = true;
-    isInstance = isInstance && "password" in value;
+    isInstance = isInstance && "oldPassword" in value;
+    isInstance = isInstance && "newPassword" in value;
 
     return isInstance;
 }
@@ -47,7 +54,8 @@ export function ChangePasswordRequestFromJSONTyped(json: any, ignoreDiscriminato
     }
     return {
         
-        'password': json['password'],
+        'oldPassword': json['oldPassword'],
+        'newPassword': json['newPassword'],
     };
 }
 
@@ -60,7 +68,8 @@ export function ChangePasswordRequestToJSON(value?: ChangePasswordRequest | null
     }
     return {
         
-        'password': value.password,
+        'oldPassword': value.oldPassword,
+        'newPassword': value.newPassword,
     };
 }
 

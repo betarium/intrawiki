@@ -17,17 +17,23 @@ function LoginPage() {
   const onLoginRequest = useCallback(async () => {
     const data = { account: account, password: password }
     const api = new AuthApi(new ApiConfiguration())
-    const res = await api.login({ loginRequest: data })
-    setLoginProgress(false)
-    if (!res.success) {
-      setError("Login failed.")
-      return
+    try {
+      const res = await api.login({ loginRequest: data })
+      setLoginProgress(false)
+      if (!res.success) {
+        setError("Login failed.")
+        return
+      }
+
+      appContext.setAuthInfo(res)
+      appContext.updatePage()
+
+      navigator(res.redirectUrl ?? "/")
     }
-
-    appContext.setAuthInfo(res)
-    appContext.updatePage()
-
-    navigator(res.redirectUrl ?? "/")
+    catch (ex) {
+      setLoginProgress(false)
+      setError("Login failed.")
+    }
   }, [navigator, account, password, appContext])
 
   const onLogin = useCallback(async () => {

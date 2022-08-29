@@ -15,6 +15,7 @@ import UserListPage from 'pages/config/UserListPage';
 import ConfigPage from 'pages/config/ConfigPage';
 import ErrorPage from 'pages/ErrorPage';
 import UserDetailPage from 'pages/config/UserDetailPage';
+import PasswordChangePage from 'pages/config/PasswordChangePage';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -43,6 +44,7 @@ root.render(
             <Route path={process.env.REACT_APP_MANAGE_PATH + "/logout"} element={<LogoutPage />} />
             <Route path={process.env.REACT_APP_MANAGE_PATH + "/edit"} element={<EditPage />} />
             <Route path={process.env.REACT_APP_MANAGE_PATH + "/config"} element={<ConfigPage />} />
+            <Route path={process.env.REACT_APP_MANAGE_PATH + "/config/password"} element={<PasswordChangePage />} />
             <Route path={process.env.REACT_APP_MANAGE_PATH + "/config/users"} element={<UserListPage />} />
             <Route path={process.env.REACT_APP_MANAGE_PATH + "/config/users/add"} element={<UserDetailPage />} />
             <Route path={process.env.REACT_APP_MANAGE_PATH + "/config/users/:id"} element={<UserDetailPage />} />

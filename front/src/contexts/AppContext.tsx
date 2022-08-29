@@ -1,5 +1,5 @@
+import { AuthInfoResponse } from "api";
 import { createContext } from "react";
-import { AuthInfoResponse } from "../models/AuthInfoResponse";
 
 export interface AppContext {
   get initialized(): boolean

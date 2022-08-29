@@ -13,6 +13,13 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import type { ErrorCode } from './ErrorCode';
+import {
+    ErrorCodeFromJSON,
+    ErrorCodeFromJSONTyped,
+    ErrorCodeToJSON,
+} from './ErrorCode';
+
 /**
  * 
  * @export
@@ -27,10 +34,16 @@ export interface ApiResultResponse {
     success: boolean;
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof ApiResultResponse
      */
-    code: string;
+    status: number;
+    /**
+     * 
+     * @type {ErrorCode}
+     * @memberof ApiResultResponse
+     */
+    code: ErrorCode;
     /**
      * 
      * @type {string}
@@ -45,6 +58,7 @@ export interface ApiResultResponse {
 export function instanceOfApiResultResponse(value: object): boolean {
     let isInstance = true;
     isInstance = isInstance && "success" in value;
+    isInstance = isInstance && "status" in value;
     isInstance = isInstance && "code" in value;
 
     return isInstance;
@@ -61,7 +75,8 @@ export function ApiResultResponseFromJSONTyped(json: any, ignoreDiscriminator: b
     return {
         
         'success': json['success'],
-        'code': json['code'],
+        'status': json['status'],
+        'code': ErrorCodeFromJSON(json['code']),
         'message': !exists(json, 'message') ? undefined : json['message'],
     };
 }
@@ -76,7 +91,8 @@ export function ApiResultResponseToJSON(value?: ApiResultResponse | null): any {
     return {
         
         'success': value.success,
-        'code': value.code,
+        'status': value.status,
+        'code': ErrorCodeToJSON(value.code),
         'message': value.message,
     };
 }

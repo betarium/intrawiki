@@ -13,6 +13,13 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import type { UserType } from './UserType';
+import {
+    UserTypeFromJSON,
+    UserTypeFromJSONTyped,
+    UserTypeToJSON,
+} from './UserType';
+
 /**
  * 
  * @export
@@ -39,10 +46,10 @@ export interface AuthInfoResponse {
     account?: string;
     /**
      * 
-     * @type {string}
+     * @type {UserType}
      * @memberof AuthInfoResponse
      */
-    userType?: string;
+    userType?: UserType;
 }
 
 /**
@@ -68,7 +75,7 @@ export function AuthInfoResponseFromJSONTyped(json: any, ignoreDiscriminator: bo
         'loggedIn': json['loggedIn'],
         'userId': !exists(json, 'userId') ? undefined : json['userId'],
         'account': !exists(json, 'account') ? undefined : json['account'],
-        'userType': !exists(json, 'userType') ? undefined : json['userType'],
+        'userType': !exists(json, 'userType') ? undefined : UserTypeFromJSON(json['userType']),
     };
 }
 
@@ -84,7 +91,7 @@ export function AuthInfoResponseToJSON(value?: AuthInfoResponse | null): any {
         'loggedIn': value.loggedIn,
         'userId': value.userId,
         'account': value.account,
-        'userType': value.userType,
+        'userType': UserTypeToJSON(value.userType),
     };
 }
 

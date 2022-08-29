@@ -13,6 +13,13 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import type { UserType } from './UserType';
+import {
+    UserTypeFromJSON,
+    UserTypeFromJSONTyped,
+    UserTypeToJSON,
+} from './UserType';
+
 /**
  * 
  * @export
@@ -36,6 +43,12 @@ export interface User {
      * @type {string}
      * @memberof User
      */
+    password?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof User
+     */
     userName: string;
     /**
      * 
@@ -45,10 +58,10 @@ export interface User {
     email?: string;
     /**
      * 
-     * @type {string}
+     * @type {UserType}
      * @memberof User
      */
-    userType: string;
+    userType: UserType;
     /**
      * 
      * @type {boolean}
@@ -82,9 +95,10 @@ export function UserFromJSONTyped(json: any, ignoreDiscriminator: boolean): User
         
         'id': json['id'],
         'account': json['account'],
+        'password': !exists(json, 'password') ? undefined : json['password'],
         'userName': json['userName'],
         'email': !exists(json, 'email') ? undefined : json['email'],
-        'userType': json['userType'],
+        'userType': UserTypeFromJSON(json['userType']),
         'disabled': !exists(json, 'disabled') ? undefined : json['disabled'],
     };
 }
@@ -100,9 +114,10 @@ export function UserToJSON(value?: User | null): any {
         
         'id': value.id,
         'account': value.account,
+        'password': value.password,
         'userName': value.userName,
         'email': value.email,
-        'userType': value.userType,
+        'userType': UserTypeToJSON(value.userType),
         'disabled': value.disabled,
     };
 }

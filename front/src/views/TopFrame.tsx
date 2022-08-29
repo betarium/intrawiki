@@ -1,11 +1,10 @@
 import React, { ReactElement, useCallback, useEffect, useRef, useState } from "react";
 import { AppContextDef, AppContextImpl } from "../contexts/AppContext";
-import { AuthInfoResponse } from "../models/AuthInfoResponse";
 import HeaderView from "./HeaderView";
 import PublicFrame from "./PublicFrame";
 import RestrictFrame from "views/RestrictFrame";
 import ApiConfiguration from "common/ApiConfiguration";
-import { AuthApi, ResponseError } from "api";
+import { AuthApi, AuthInfoResponse, ResponseError } from "api";
 
 class AppContextHolder {
   static context: AppContextImpl | undefined

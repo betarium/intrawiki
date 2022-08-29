@@ -1,26 +1,31 @@
 import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import UserTypeCode from "./UserTypeCode";
 
 @Entity({ name: "users" })
 export default class UserEntity {
 	@PrimaryGeneratedColumn()
 	readonly id: number;
 
-	@Column({ unique: true })
+	@Column({ unique: true, length: 100 })
 	account: string;
 
-	@Column({ nullable: true })
+	@Column({ nullable: true, length: 100 })
 	password?: string;
 
-	@Column({ name: "user_name" })
+	@Column({ name: "user_name", type: "nvarchar", length: 100 })
 	userName: string;
 
-	@Column({ name: "email", unique: true, nullable: true })
+	@Column({ unique: true, nullable: true, length: 100 })
 	email?: string;
 
-	@Column({ name: "user_type" })
-	userType: string = "Users";
+	@Column({
+		name: "user_type",
+		length: 20,
+		default: UserTypeCode[UserTypeCode.Normal]
+	})
+	userType: string = UserTypeCode[UserTypeCode.Normal];
 
-	@Column()
+	@Column({ default: false })
 	disabled: boolean = false;
 
 	@Column({ name: "create_user", nullable: true })

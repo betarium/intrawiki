@@ -4,6 +4,7 @@ import express from 'express';
 import { SessionModel } from 'web/SessionModel';
 import { Page } from 'api/models/Page';
 import { ApiResultResponse } from 'api/models/ApiResultResponse';
+import { ErrorCode } from 'api/models';
 
 const router = express.Router();
 
@@ -56,7 +57,7 @@ router.get('/', async function (req, res, next) {
   const page = await ServerContext.dataSource.manager.findOneBy(PageEntity, { title: title })
   if (page === undefined || page === null) {
     res.status(404)
-    const error = { success: false, code: "NotFound", message: "data not found" } as ApiResultResponse
+    const error = { success: false, status: 404, code: ErrorCode.NotFound, message: "data not found" } as ApiResultResponse
     res.json(error)
     return
   }

@@ -250,16 +250,39 @@ paths:
 
 components:
   schemas:
+    ErrorCode:
+      type: string
+      enum:
+        - SUCCESS
+        - UNKNOWN_ERROR
+        - SERVER_ERROR
+        - SCRIPT_ERROR
+        - NOT_FOUND
+        - CONFLICT
+        - BAD_REQUEST
+        - UNAUTHORIZED
+        - FORBIDDEN
+    UserType:
+      type: string
+      enum:
+        - Normal
+        - Guest
+        - Admin
+
     ApiResultResponse:
       required:
         - success
+        - status
         - code
       type: object
       properties:
         success:
           type: boolean
+        status:
+          type: number
         code:
           type: string
+          $ref: '#/components/schemas/ErrorCode'
         message:
           type: string
     AuthInfoResponse:
@@ -275,6 +298,7 @@ components:
           type: string
         userType:
           type: string
+          $ref: '#/components/schemas/UserType'
     LoginRequest:
       required:
         - account
@@ -302,10 +326,13 @@ components:
           type: string
     ChangePasswordRequest:
       required:
-        - password
+        - oldPassword
+        - newPassword
       type: object
       properties:
-        password:
+        oldPassword:
+          type: string
+        newPassword:
           type: string
     User:
       required:
@@ -321,6 +348,8 @@ components:
         account:
           type: string
           example: guest
+        password:
+          type: string
         userName:
           type: string
           example: Guest
@@ -328,6 +357,7 @@ components:
           type: string
         userType:
           type: string
+          $ref: '#/components/schemas/UserType'
         disabled:
           type: boolean
     UserListResponse:

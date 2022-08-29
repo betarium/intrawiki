@@ -2,6 +2,7 @@ import { DataSource } from "typeorm";
 import { DefaultDataSource } from "./DefaultDataSource"
 import PageEntity from "./entities/PageEntity";
 import UserEntity from "./entities/UserEntity"
+import UserTypeCode from "./entities/UserTypeCode";
 
 export default class DatabaseService {
 
@@ -25,20 +26,20 @@ export default class DatabaseService {
     console.log("insert data...")
 
     const user = new UserEntity()
-    // user.id = 1
     user.account = "admin"
     user.password = "password"
     user.userName = "Administrator"
     user.email = "admin@localhost"
+    user.userType = UserTypeCode[UserTypeCode.Admin]
     await DefaultDataSource.manager.insert(UserEntity, user)
 
     const guest = new UserEntity()
-    // guest.id = 2
     guest.account = "guest"
     guest.password = "password"
     guest.userName = "Guest"
     guest.email = "guest@localhost"
     guest.disabled = true
+    guest.userType = UserTypeCode[UserTypeCode.Guest]
     await DefaultDataSource.manager.insert(UserEntity, guest)
 
     const home = new PageEntity()
