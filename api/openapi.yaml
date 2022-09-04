@@ -293,7 +293,7 @@ components:
         loggedIn:
           type: boolean
         userId:
-          type: number
+          type: integer
         account:
           type: string
         userType:
@@ -319,7 +319,7 @@ components:
         loggedIn:
           type: boolean
         userId:
-          type: number
+          type: integer
         account:
           type: string
         redirectUrl:

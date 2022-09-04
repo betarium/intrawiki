@@ -13,6 +13,8 @@
  */
 
 
+import * as express from 'express';
+
 export const BASE_PATH = "http://localhost:4000/intrawiki-manage/api".replace(/\/+$/, "");
 
 export interface ConfigurationParameters {
@@ -177,7 +179,7 @@ export class BaseAPI {
                 }) || fetchParams;
             }
         }
-        let response = undefined;
+        let response: Response | undefined = undefined;
         try {
             response = await (this.configuration.fetchApi || fetch)(fetchParams.url, fetchParams.init);
         } catch (e) {
@@ -404,4 +406,29 @@ export class TextApiResponse {
     async value(): Promise<string> {
         return await this.raw.text();
     };
+}
+
+export type ApiErrorHandler = (err: any, req: express.Request, res: express.Response, next: express.NextFunction) => Promise<void>;
+
+export async function ApiErrorHandlerDefault(err: any, req: express.Request, res: express.Response, next: express.NextFunction) : Promise<void> {
+    console.warn("Api error", err)
+    res.sendStatus(500)
+}
+
+export function convert_string(value: any): string | undefined {
+    if (value === undefined) {
+        return undefined;
+    }
+    return value as string;
+}
+
+export function convert_number(value: any): number | undefined {
+    if (value.toString().indexOf('.') >= 0) {
+        return parseFloat(value);
+    }
+    return parseInt(value);
+}
+
+export function convert_integer(value: any): number | undefined{
+    return parseInt(value);
 }

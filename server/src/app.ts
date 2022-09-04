@@ -6,9 +6,35 @@ import cookieParser from 'cookie-parser'
 import logger from 'morgan'
 import { SessionModel } from 'web/SessionModel';
 import sessionFileStore from 'session-file-store'
+import { getUsersApiRoute } from 'api';
+import { container } from 'tsyringe';
+import UsersApiController from 'controllers/UsersApiController';
+import NotFoundError from 'web/errors/NotFoundError';
+import UnauthorizedError from 'web/errors/UnauthorizedError';
+
+export async function ApiErrorHandlerCustom(err: any, req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> {
+  console.warn("Api error", err)
+
+  if (err instanceof UnauthorizedError) {
+    res.statusCode = 401
+    res.header("X-ERROR-CODE", "UnauthorizedError")
+    res.json({ message: "Unauthorized" })
+  } else if (err instanceof NotFoundError) {
+    res.statusCode = 404
+    res.header("X-ERROR-CODE", "NotFoundError")
+    res.json({ message: "Not found" })
+  } else {
+    res.statusCode = 500
+    res.header("X-ERROR-CODE", "ServerError")
+    res.json({ message: "Server error" })
+  }
+}
+
+container.register("UsersApi", { useValue: new UsersApiController() });
 
 const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
+// const usersRouter = require('./routes/users');
+const usersRouter = getUsersApiRoute(ApiErrorHandlerCustom)
 const authRouter = require('./routes/auth');
 const pageRouter = require('./routes/page');
 const publicRouter = require('./routes/public');
@@ -156,7 +182,7 @@ app.use(function (req, res, next) {
 })
 
 app.use('/', indexRouter);
-app.use('/intrawiki-manage/api/users', usersRouter);
+app.use('/intrawiki-manage/api', usersRouter);
 app.use('/intrawiki-manage/api/auth', authRouter);
 app.use('/intrawiki-manage/api/pages', pageRouter);
 app.use('/', publicRouter);
