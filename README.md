@@ -8,10 +8,12 @@ This application requires user authentication.
 * node 16
 * docker, docker-compose
 
-## install & start
+## Build & start
 
 Build in docker.
 ```
+git clone https://github.com/betarium/intrawiki.git
+cd intrawiki
 docker-compose build standalone
 ```
 
@@ -19,6 +21,8 @@ Start in docker.
 ```
 docker-compose up standalone
 ```
+
+Access to "http://localhost" in browser.
 
 ## Environment
 
@@ -30,4 +34,5 @@ docker-compose up standalone
 ## License
 
     The MIT License
-    Copyright 2022 betarium (https://twitter.com/betarium)
+    Copyright 2022 betarium
+    (https://twitter.com/betarium)

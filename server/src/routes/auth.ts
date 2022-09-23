@@ -24,6 +24,7 @@ router.post('/login', async function (req: express.Request, res: express.Respons
     const errorOutput = { success: false, redirectUrl: undefined } as LoginResponse
 
     if (input.account === undefined || input.account.length <= 0) {
+      console.log("login faild. user not found. account=" + input.account)
       res.statusCode = 401
       res.json(errorOutput)
       return
@@ -31,12 +32,14 @@ router.post('/login', async function (req: express.Request, res: express.Respons
 
     const user = await ServerContext.dataSource.manager.findOneBy<UserEntity>(UserEntity, { account: input.account })
     if (user === undefined || user === null || user.account !== input.account || user.disabled) {
+      console.log("login faild. invalid user. account=" + input.account)
       res.statusCode = 401
       res.json(errorOutput)
       return
     }
 
     if (user.password === undefined || user.password === null || (user.password?.length ?? 0) === 0 || user.password !== input.password) {
+      console.log("login faild. invalid password. account=" + input.account)
       res.statusCode = 401
       res.json(errorOutput)
       return

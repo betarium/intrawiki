@@ -11,6 +11,7 @@ export default class UsersApiController implements UsersApi {
     user.account = input.account
     user.email = input.email
     user.userName = input.userName
+    user.password = input.password
 
     user = await ServerContext.dataSource.manager.save(user)
 

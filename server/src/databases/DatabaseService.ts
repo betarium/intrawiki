@@ -40,7 +40,7 @@ export default class DatabaseService {
       guest.password = "password"
       guest.userName = "Guest"
       guest.email = "guest@localhost"
-      guest.disabled = true
+      // guest.disabled = true
       guest.userType = UserTypeCode[UserTypeCode.Guest]
       await DefaultDataSource.manager.insert(UserEntity, guest)
     }
