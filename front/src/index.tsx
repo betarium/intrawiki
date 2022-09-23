@@ -21,6 +21,8 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 
+const managePath = process.env.REACT_APP_MANAGE_PATH ?? '/intrawiki-manage'
+
 root.render(
   <React.StrictMode>
     <TopFrame>
@@ -28,10 +30,10 @@ root.render(
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<HomePage />} />
-            <Route path={process.env.REACT_APP_MANAGE_PATH + "/login"} element={<LoginPage />} />
-            <Route path={process.env.REACT_APP_MANAGE_PATH + "/logout"} element={<LogoutPage />} />
-            <Route path={process.env.REACT_APP_MANAGE_PATH + "/error/404"} element={<NotFoundPage />} />
-            <Route path={process.env.REACT_APP_MANAGE_PATH + "/error"} element={<ErrorPage />} />
+            <Route path={managePath + "/login"} element={<LoginPage />} />
+            <Route path={managePath + "/logout"} element={<LogoutPage />} />
+            <Route path={managePath + "/error/404"} element={<NotFoundPage />} />
+            <Route path={managePath + "/error"} element={<ErrorPage />} />
             <Route path='*' element={<LoginPage />} />
           </Routes>
         </BrowserRouter>
@@ -40,16 +42,16 @@ root.render(
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<HomePage />} />
-            <Route path={process.env.REACT_APP_MANAGE_PATH + "/login"} element={<LoginPage />} />
-            <Route path={process.env.REACT_APP_MANAGE_PATH + "/logout"} element={<LogoutPage />} />
-            <Route path={process.env.REACT_APP_MANAGE_PATH + "/edit"} element={<EditPage />} />
-            <Route path={process.env.REACT_APP_MANAGE_PATH + "/config"} element={<ConfigPage />} />
-            <Route path={process.env.REACT_APP_MANAGE_PATH + "/config/password"} element={<PasswordChangePage />} />
-            <Route path={process.env.REACT_APP_MANAGE_PATH + "/config/users"} element={<UserListPage />} />
-            <Route path={process.env.REACT_APP_MANAGE_PATH + "/config/users/add"} element={<UserDetailPage />} />
-            <Route path={process.env.REACT_APP_MANAGE_PATH + "/config/users/:id"} element={<UserDetailPage />} />
-            <Route path={process.env.REACT_APP_MANAGE_PATH + "/error/404"} element={<NotFoundPage />} />
-            <Route path={process.env.REACT_APP_MANAGE_PATH + "/error"} element={<ErrorPage />} />
+            <Route path={managePath + "/login"} element={<LoginPage />} />
+            <Route path={managePath + "/logout"} element={<LogoutPage />} />
+            <Route path={managePath + "/edit"} element={<EditPage />} />
+            <Route path={managePath + "/config"} element={<ConfigPage />} />
+            <Route path={managePath + "/config/password"} element={<PasswordChangePage />} />
+            <Route path={managePath + "/config/users"} element={<UserListPage />} />
+            <Route path={managePath + "/config/users/add"} element={<UserDetailPage />} />
+            <Route path={managePath + "/config/users/:id"} element={<UserDetailPage />} />
+            <Route path={managePath + "/error/404"} element={<NotFoundPage />} />
+            <Route path={managePath + "/error"} element={<ErrorPage />} />
             <Route path='*' element={<ViewPage />} />
           </Routes>
         </BrowserRouter>

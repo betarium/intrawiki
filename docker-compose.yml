@@ -31,6 +31,20 @@ services:
       - $DOCKER_DATA_DIR/server/tmp/db:$DOCKER_BASE_DIR/server/tmp/db
     ports:
       - ${SERVER_PORT}:4000
+  standalone:
+    build:
+      context: .
+      dockerfile: docker/standalone/Dockerfile
+    environment:
+      <<: *x-common-environment
+      REACT_APP_MANAGE_PATH: /intrawiki-manage
+      NODE_ENV: production
+      SERVER_PORT: 80
+      SESSION_SECURE: false
+    volumes:
+      - ./tmp/db:$DOCKER_BASE_DIR/server/tmp/db
+    ports:
+      - 80:4000
 volumes:
   server-pnpm-volume:
   server-node-modules-volume:

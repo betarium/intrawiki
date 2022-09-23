@@ -8,7 +8,7 @@ type NODE_ENV_TYPE = "development" | "test" | "staging" | "production" | ""
 
 export default class CommonConfig {
   static get NODE_ENV(): NODE_ENV_TYPE {
-    const env = this.getStringOrDefault("NODE_ENV", "") ?? "";
+    const env = this.getStringOrDefault("NODE_ENV") ?? "development";
     return env as NODE_ENV_TYPE
   }
 
@@ -66,6 +66,18 @@ export default class CommonConfig {
 
   static get SESSION_SECRET(): string {
     return this.getStringOrDefault("SESSION_SECRET") ?? 'secret';
+  }
+
+  static get SESSION_SECURE(): boolean {
+    const value = this.getStringOrDefault("SESSION_SECURE")
+    if (value === "true") {
+      return true
+    }
+    else if (value === "false") {
+      return false
+    }
+
+    return CommonConfig.NODE_ENV === 'production'
   }
 
   static get DB_HOST(): string {

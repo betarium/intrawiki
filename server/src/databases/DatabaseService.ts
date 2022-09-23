@@ -1,3 +1,4 @@
+import CommonConfig from "common/CommonConfig";
 import { DataSource } from "typeorm";
 import { DefaultDataSource } from "./DefaultDataSource"
 import PageEntity from "./entities/PageEntity";
@@ -33,14 +34,16 @@ export default class DatabaseService {
     user.userType = UserTypeCode[UserTypeCode.Admin]
     await DefaultDataSource.manager.insert(UserEntity, user)
 
-    const guest = new UserEntity()
-    guest.account = "guest"
-    guest.password = "password"
-    guest.userName = "Guest"
-    guest.email = "guest@localhost"
-    guest.disabled = true
-    guest.userType = UserTypeCode[UserTypeCode.Guest]
-    await DefaultDataSource.manager.insert(UserEntity, guest)
+    if (CommonConfig.NODE_ENV !== 'production') {
+      const guest = new UserEntity()
+      guest.account = "guest"
+      guest.password = "password"
+      guest.userName = "Guest"
+      guest.email = "guest@localhost"
+      guest.disabled = true
+      guest.userType = UserTypeCode[UserTypeCode.Guest]
+      await DefaultDataSource.manager.insert(UserEntity, guest)
+    }
 
     const home = new PageEntity()
     home.title = "/"
@@ -53,12 +56,5 @@ export default class DatabaseService {
     await DefaultDataSource.manager.insert(PageEntity, help)
 
     console.log("initialize database complete.")
-    // console.log("Saved a new user with id: " + user.id)
-
-    // console.log("Loading users from the database...")
-    // const users = await AppDataSource.manager.find(User)
-    // console.log("Loaded users: ", users)
-
-
   }
 }
