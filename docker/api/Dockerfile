@@ -1,5 +1,3 @@
-FROM alpine:3.14
-
 FROM openapitools/openapi-generator-cli
 
 ENV DATA_DIR /var/app/docker-data/api

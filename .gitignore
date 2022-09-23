@@ -5,3 +5,6 @@
 /docker-data/
 /.pnpm-store
 /.ssh
+
+*.log
+*.tmp

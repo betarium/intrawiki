@@ -5,7 +5,7 @@ import UserEntity from "./entities/UserEntity"
 
 export const DefaultDataSource = new DataSource({
     type: "sqlite",
-    database: "tmp/intrawiki-dev.db",
+    database: "tmp/db/intrawiki-dev.db",
     synchronize: true,
     logging: false,
     entities: [
