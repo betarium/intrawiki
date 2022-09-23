@@ -3,15 +3,17 @@ FROM alpine:3.16
 RUN apk --no-cache add git openssh
 RUN apk --no-cache add nodejs=16.16.0-r0 npm
 
-WORKDIR /var/app
+RUN npm install -g pnpm
 
-RUN git clone https://github.com/betarium/intrawiki.git
-
+ENV NODE_ENV production
 ENV BASE_DIR /var/app/intrawiki
 
-WORKDIR $BASE_DIR
+WORKDIR /var/app
 
-RUN npm install -g pnpm
+ADD https://api.github.com/repos/betarium/intrawiki/git/refs/heads/master version.json
+RUN git clone -b master --depth 1 https://github.com/betarium/intrawiki.git
+
+WORKDIR $BASE_DIR
 
 WORKDIR $BASE_DIR/front
 
