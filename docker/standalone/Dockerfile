@@ -7,6 +7,7 @@ RUN npm install -g pnpm
 
 ENV NODE_ENV production
 ENV BASE_DIR /var/app/intrawiki
+ENV REACT_APP_MANAGE_PATH /intrawiki-manage
 
 WORKDIR /var/app
 
@@ -17,12 +18,12 @@ WORKDIR $BASE_DIR
 
 WORKDIR $BASE_DIR/front
 
-RUN pnpm install --frozen-lockfile
+RUN NODE_ENV=development && pnpm install --frozen-lockfile
 RUN pnpm build
 
 WORKDIR $BASE_DIR/server
 
-RUN pnpm install --frozen-lockfile
+RUN NODE_ENV=development && pnpm install --frozen-lockfile
 RUN pnpm build
 
 RUN ln -s $BASE_DIR/front/build $BASE_DIR/server/public

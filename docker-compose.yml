@@ -42,7 +42,7 @@ services:
       SERVER_PORT: 80
       SESSION_SECURE: false
     volumes:
-      - ./tmp/db:$DOCKER_BASE_DIR/server/tmp/db
+      - ./tmp/db:/var/app/intrawiki/server/tmp/db
     ports:
       - 80:4000
 volumes:
