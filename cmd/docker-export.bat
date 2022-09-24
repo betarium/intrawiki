@@ -5,7 +5,8 @@ rem if exist tmp\server goto skip_build
 if exist tmp\server rmdir /s /q tmp\server
 mkdir tmp\server
 
-call cmd\build.bat
+echo BUILD_DATE: %DATE% %TIME% > tmp\server\build.log
+git -p log -n 1 --format="%H %aD" >> tmp\server\build.log
 
 xcopy /s server\build tmp\server\build\
 copy server\package.json tmp\server\
@@ -21,9 +22,10 @@ rem echo NODE_ENV=production >> tmp\server\.env
 
 if not exist tmp\images mkdir tmp\images
 
-call cmd\docker-build.bat
+rem call cmd\docker-build.bat server
+docker-compose -p %DOCKER_PROJECT% --env-file %ENV_FILE% -f docker-compose.yml build server
 
 rem docker-compose -p %DOCKER_PROJECT% --env-file %ENV_FILE% -f docker-compose.yml run --service-ports server
-docker save %DOCKER_PROJECT%-server -o tmp/images/intrawiki.img
+docker save %DOCKER_PROJECT%_server -o tmp/images/intrawiki.img
 
-pause
+timeout 5

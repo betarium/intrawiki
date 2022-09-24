@@ -20,6 +20,7 @@ enum MarkDownElementType {
   keyword,
   line,
   list,
+  br,
 }
 
 interface MarkDownElement {
@@ -72,6 +73,9 @@ function parseMarkDownLine(line: string, state: MarkDownState): MarkDownElement[
       state.listMode = false
       const item = { type: MarkDownElementType.list, end: true } as MarkDownElement
       elements.push(item)
+    } else {
+      const item = { type: MarkDownElementType.br } as MarkDownElement
+      elements.push(item)
     }
   }
   else if (line.startsWith("#")) {
@@ -106,7 +110,6 @@ function parseMarkDownLine(line: string, state: MarkDownState): MarkDownElement[
   else if (line.startsWith("---")) {
     const item = { type: MarkDownElementType.line } as MarkDownElement
     elements.push(item)
-    state.codeMode = true
   }
   else if (line.startsWith("*")) {
     const sub = line.substring(1)
@@ -254,6 +257,9 @@ function MarkDownLineView(props: { element: MarkDownElement, elementIndex: numbe
   }
   else if (element.type === MarkDownElementType.line) {
     return <hr />
+  }
+  else if (element.type === MarkDownElementType.br) {
+    return <br />
   }
   else {
     return (

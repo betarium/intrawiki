@@ -26,4 +26,8 @@ if not exist .env copy server\.env.sample.env .env
 if not exist docker-data mkdir docker-data
 if not exist tmp mkdir tmp
 
-rem set SSH_USER_HOST=
+rem set SSH_SERVER=
+
+if not exist cmd\init-env.bat copy cmd\init-env.sample.bat cmd\init-env.bat
+call cmd\init-env.bat
+

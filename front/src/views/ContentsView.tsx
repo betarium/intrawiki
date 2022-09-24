@@ -54,6 +54,7 @@ function ContentsView() {
         <>
           <MarkDownView contents={page.contents ?? ""} />
           <div>
+            <hr />
             <a href={"/intrawiki-manage/edit?page=" + encodeURIComponent(location.pathname)}>edit</a>
           </div>
         </>

@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  server:
+    image: intrawiki-development_server
+    container_name: intrawiki
+    environment:
+      DOCKER_DATA_DIR: ./docker-data
+      DOCKER_DATA_BASE_DIR: /var/app/intrawiki/docker-data
+      REACT_APP_MANAGE_PATH: /intrawiki-manage
+    volumes:
+      - ./db:/var/app/intrawiki/docker-data/server/tmp/db
+    ports:
+      - 8001:4000

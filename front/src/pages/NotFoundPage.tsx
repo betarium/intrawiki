@@ -8,9 +8,11 @@ function NotFoundPage() {
 
   const page = query.get("page") ?? location.pathname
 
+  const managePath = process.env.REACT_APP_MANAGE_PATH ?? '/intrawiki-manage'
+
   return (
     <PageFrame title="Error - Not Found">
-      <a href={"/edit?page=" + encodeURIComponent(page) + "&new=1"}>edit</a>
+      <a href={managePath + "/edit?page=" + encodeURIComponent(page) + "&new=1"}>edit</a>
     </PageFrame>
   );
 }

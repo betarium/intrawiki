@@ -1,5 +1,7 @@
 FROM alpine:3.16
 
+ENV DOCKER_DATA_BASE_DIR /var/app/intrawiki/docker-data
+
 ADD docker/server/docker-entry-custom.sh /usr/bin/
 RUN chmod +x /usr/bin/docker-entry-custom.sh
 
@@ -9,7 +11,8 @@ RUN npm install -g pnpm
 
 WORKDIR $DOCKER_DATA_BASE_DIR/server
 
-ADD tmp/server $DOCKER_DATA_BASE_DIR/server
+ADD tmp/server/build.log $DOCKER_DATA_BASE_DIR/server/
+ADD tmp/server $DOCKER_DATA_BASE_DIR/server/
 
 RUN pnpm install --frozen-lockfile
 

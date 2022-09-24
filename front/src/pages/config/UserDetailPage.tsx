@@ -56,6 +56,10 @@ function UserDetailPage() {
     setUser({ ...user, userType: value as UserType })
   }, [user, setUser])
 
+  const setDisabled = useCallback((value: boolean) => {
+    setUser({ ...user, disabled: value })
+  }, [user, setUser])
+
   const onSave = useCallback(async () => {
     try {
       if (user.account.length === 0) {
@@ -97,46 +101,48 @@ function UserDetailPage() {
       <div>
         <a href="/intrawiki-manage/config/users">list...</a>
       </div>
-      <>
-        {user !== undefined &&
-          <section>
-            <div>
-              <label className={styles.label}>Account</label>
-              {user.newFlag &&
-                <span className={styles.value} ><input type="text" value={user.account} onChange={e => setAccount(e.target.value)} autoComplete="off" /></span>
-              }
-              {!user.newFlag &&
-                <span className={styles.value} >{user.account}</span>
-              }
-            </div>
-            <div>
-              <label className={styles.label}>User Type</label>
-              <span className={styles.value}>
-                <select value={user.userType} onChange={(e) => setUserType(e.target.value)}>
-                  <option value={UserType.Normal} label={UserType.Normal} />
-                  <option value={UserType.Guest} label={UserType.Guest} />
-                  <option value={UserType.Admin} label={UserType.Admin} />
-                </select>
-              </span>
-            </div>
-            <div>
-              <label className={styles.label}>Name</label>
-              <span className={styles.value}><input type="text" value={user.userName} onChange={e => setName(e.target.value)} autoComplete="off" /></span>
-            </div>
-            <div>
-              <label className={styles.label}>E-mail</label>
-              <span className={styles.value}><input type="email" name="email" value={user.email} onChange={e => setEmail(e.target.value)} autoComplete="off" /></span>
-            </div>
-            <div>
-              <label className={styles.label}>Password</label>
-              <span className={styles.value}><input type="password" name="newPassword" value={user.password ?? ""} onChange={e => setPassword(e.target.value)} autoComplete="new-password" /></span>
-            </div>
-            <div>
-              <input type="button" value="Save" onClick={onSave} />
-            </div>
-          </section>
-        }
-      </>
+      <section className={styles.section}>
+        <form>
+          <div>
+            <label className={styles.label}>Account</label>
+            {user.newFlag &&
+              <span className={styles.value} ><input type="text" value={user.account} onChange={e => setAccount(e.target.value)} autoComplete="off" /></span>
+            }
+            {!user.newFlag &&
+              <span className={styles.value} >{user.account}</span>
+            }
+          </div>
+          <div>
+            <label className={styles.label}>Password</label>
+            <span className={styles.value}><input type="password" name="newPassword" value={user.password ?? ""} onChange={e => setPassword(e.target.value)} autoComplete="new-password" /></span>
+          </div>
+          <div>
+            <label className={styles.label}>User Type</label>
+            <span className={styles.value}>
+              <select value={user.userType} onChange={(e) => setUserType(e.target.value)}>
+                <option value={UserType.Normal} label={UserType.Normal} />
+                <option value={UserType.Guest} label={UserType.Guest} />
+                <option value={UserType.Admin} label={UserType.Admin} />
+              </select>
+            </span>
+          </div>
+          <div>
+            <label className={styles.label}>Name</label>
+            <span className={styles.value}><input type="text" value={user.userName} onChange={e => setName(e.target.value)} autoComplete="off" /></span>
+          </div>
+          <div>
+            <label className={styles.label}>E-mail</label>
+            <span className={styles.value}><input type="email" name="email" value={user.email} onChange={e => setEmail(e.target.value)} autoComplete="off" /></span>
+          </div>
+          <div>
+            <label className={styles.label}>Disable</label>
+            <span className={styles.value}><input type="checkbox" name="disabled" value="true" checked={user.disabled} onChange={e => setDisabled(e.target.checked)} /></span>
+          </div>
+          <div>
+            <input type="button" value="Save" onClick={onSave} />
+          </div>
+        </form>
+      </section>
     </PageFrame >
   )
 }
@@ -144,9 +150,11 @@ function UserDetailPage() {
 export default UserDetailPage;
 
 const useStyles = makeStyles({
-  contents: {
-    width: "100%",
-    minHeight: "200px",
+  section: {
+    "& div": {
+      height: "22px",
+      marginBottom: "4px",
+    },
   },
   label: {
     display: "inline-block",

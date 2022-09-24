@@ -52,6 +52,8 @@ root.render(
             <Route path={managePath + "/config/users/:id"} element={<UserDetailPage />} />
             <Route path={managePath + "/error/404"} element={<NotFoundPage />} />
             <Route path={managePath + "/error"} element={<ErrorPage />} />
+            <Route path={"/error/404"} element={<NotFoundPage />} />
+            <Route path={"/error"} element={<ErrorPage />} />
             <Route path='*' element={<ViewPage />} />
           </Routes>
         </BrowserRouter>

@@ -4,6 +4,7 @@ x-common-environment: &x-common-environment
   SERVER_ENV: ${SERVER_ENV:-dev}
   DOCKER_DATA_DIR: ./docker-data
   DOCKER_BASE_DIR: /var/app/intrawiki/docker-data
+  DOCKER_DATA_BASE_DIR: /var/app/intrawiki/docker-data
   DOCKER_HOST_INTERNAL: ${DOCKER_HOST_INTERNAL:-127.0.0.1}
   SERVER_PORT: ${SERVER_PORT:-4000}
 

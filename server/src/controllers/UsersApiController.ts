@@ -12,10 +12,12 @@ export default class UsersApiController implements UsersApi {
     user.email = input.email
     user.userName = input.userName
     user.password = input.password
+    user.disabled = input.disabled ?? false
+    user.userType = input.userType
 
     user = await ServerContext.dataSource.manager.save(user)
 
-    const output = { id: user.id, account: user.account, email: user.email, userName: user.userName, userType: user.userType } as User
+    const output = this.convertUserResponse(user)
     return output
   }
 
@@ -30,13 +32,13 @@ export default class UsersApiController implements UsersApi {
       throw new NotFoundError()
     }
 
-    const output = { id: user.id, account: user.account, email: user.email, userName: user.userName, userType: user.userType } as User
+    const output = this.convertUserResponse(user)
     return output
   }
 
   async getUserList(): Promise<UserListResponse> {
     const users = await ServerContext.dataSource.manager.find(UserEntity)
-    const items = users.map(p => ({ id: p.id, account: p.account, email: p.email, userName: p.userName, userType: p.userType } as User))
+    const items = users.map(p => this.convertUserResponse(p))
     const output = { items: items } as UserListResponse
     return output
   }
@@ -52,10 +54,28 @@ export default class UsersApiController implements UsersApi {
 
     user.email = input.email
     user.userName = input.userName
+    user.disabled = input.disabled ?? false
+    user.userType = input.userType
+
+    if (input.password !== undefined && input.password.length > 0) {
+      user.password = input.password
+    }
 
     user = await ServerContext.dataSource.manager.save(user)
 
-    const output = { id: user.id, account: user.account, email: user.email, userName: user.userName, userType: user.userType } as User
+    const output = this.convertUserResponse(user)
+    return output
+  }
+
+  private convertUserResponse(user: UserEntity): User {
+    const output = {
+      id: user.id,
+      account: user.account,
+      email: user.email,
+      userName: user.userName,
+      userType: user.userType,
+      disabled: user.disabled
+    } as User
     return output
   }
 }

@@ -11,6 +11,7 @@ import { container } from 'tsyringe';
 import UsersApiController from 'controllers/UsersApiController';
 import NotFoundError from 'web/errors/NotFoundError';
 import UnauthorizedError from 'web/errors/UnauthorizedError';
+import ServerContext from 'web/ServerContext';
 
 export async function ApiErrorHandlerCustom(err: any, req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> {
   console.warn("Api error", err)
@@ -177,6 +178,24 @@ app.use(function (req, res, next) {
     }
   }
   else {
+    const ses = ServerContext.getSession(req)
+    if (req.path.startsWith("/intrawiki-manage/api/auth")) {
+      //skip
+    }
+    else if (req.path.startsWith("/intrawiki-manage/api/page")) {
+      if (ses.userType !== 'Admin' && ses.userType !== 'Normal') {
+        res.statusMessage = "Forbidden"
+        res.sendStatus(403)
+        return
+      }
+    } else {
+      if (ses.userType !== 'Admin') {
+        res.statusMessage = "Forbidden"
+        res.sendStatus(403)
+        return
+      }
+    }
+
     return next()
   }
 })

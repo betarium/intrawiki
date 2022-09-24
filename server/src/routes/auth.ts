@@ -7,7 +7,8 @@ import { LoginRequest } from 'api/models/LoginRequest'
 import { LoginResponse } from 'api/models/LoginResponse'
 import { AuthInfoResponse } from 'api/models/AuthInfoResponse'
 import { ApiResultResponse } from 'api/models/ApiResultResponse'
-import { ChangePasswordRequest, ErrorCode } from 'api/models'
+import { ChangePasswordRequest, ErrorCode, UserType } from 'api/models'
+import UserTypeCode from 'databases/entities/UserTypeCode'
 
 const router = express.Router()
 
@@ -48,6 +49,25 @@ router.post('/login', async function (req: express.Request, res: express.Respons
     req.session.loggedIn = true
     req.session.userId = user.id
     req.session.account = user.account
+    req.session.userName = user.userName
+
+    function convertUserType(value: string): UserType {
+      let result: UserType = UserType.Guest
+      if (value === UserTypeCode[UserTypeCode.Admin]) {
+        result = UserType.Admin
+      }
+      else if (value === UserTypeCode[UserTypeCode.Normal]) {
+        result = UserType.Normal
+      }
+      else if (value === UserTypeCode[UserTypeCode.Guest]) {
+        result = UserType.Guest
+      }
+
+      return result
+    }
+
+    req.session.userType = convertUserType(user.userType)
+
     const output = {
       success: true,
       redirectUrl: "/",
@@ -66,7 +86,13 @@ router.post('/login', async function (req: express.Request, res: express.Respons
 });
 
 router.get('/info', async function (req: express.Request, res: express.Response, next: express.NextFunction) {
-  const output = { loggedIn: req.session?.loggedIn ?? false, userId: req.session?.userId, account: req.session?.account } as AuthInfoResponse
+  const output = {
+    loggedIn: req.session?.loggedIn ?? false,
+    userId: req.session?.userId,
+    account: req.session?.account,
+    userType: req.session.userType
+  } as AuthInfoResponse
+
   if (!output.loggedIn) {
     res.status(401)
     res.json({})
@@ -77,7 +103,13 @@ router.get('/info', async function (req: express.Request, res: express.Response,
 
 router.post('/logout', async function (req: express.Request, res: express.Response, next: express.NextFunction) {
   req.session.loggedIn = false
+  req.session.userId = undefined
+  req.session.account = undefined
+  req.session.userName = undefined
+  req.session.userType = undefined
+
   req.session.destroy(() => { })
+
   if (req.session?.cookie !== undefined) {
     req.session.cookie.expires = new Date(1980, 1, 1)
   }
