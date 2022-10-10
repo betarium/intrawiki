@@ -4,6 +4,8 @@ set SERVER_PORT=80
 
 call cmd\build.bat
 
+call cmd\build-copy.bat
+
 call cmd\docker-export
 
 echo "upload image..."

@@ -1,7 +1,8 @@
 FROM alpine:3.16
 
 RUN apk --no-cache add git openssh
-RUN apk --no-cache add nodejs=16.16.0-r0 npm
+RUN apk --no-cache add nodejs=16.17.1-r0 npm
+#RUN apk --no-cache add --repository=http://dl-cdn.alpinelinux.org/alpine/v3.10/main nodejs=16.17.1-r0 npm
 
 RUN npm install -g pnpm
 

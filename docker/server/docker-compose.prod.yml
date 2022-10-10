@@ -12,3 +12,4 @@ services:
       - ./db:/var/app/intrawiki/docker-data/server/tmp/db
     ports:
       - 8001:4000
+    restart: always
